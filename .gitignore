@@ -10,3 +10,9 @@ WSQ - Dr. Alfred Ang - CompTIA Certified Network+ Training - v4.pptx
 
 # Playwright MCP
 .playwright-mcp/
+
+# Copyrighted reference material and legacy decks (never pushed)
+/reference/
+
+# Superseded courseware versions (kept locally, not published)
+/courseware/archive/
