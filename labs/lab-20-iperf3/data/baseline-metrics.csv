@@ -1,0 +1,18 @@
+link_segment,date,test_type,throughput_mbps,latency_ms,jitter_ms,loss_pct,notes
+core-sw-01 to core-sw-02 (10G uplink),2026-03-02,TCP,9410,0.21,0.00,0.00,healthy baseline after commissioning
+core-sw-01 to dist-sw-01 (1G trunk),2026-03-02,TCP,942,0.38,0.00,0.00,at line rate
+dist-sw-01 to acc-sw-l1-01 (1G access),2026-03-02,TCP,938,0.44,0.00,0.00,at line rate
+acc-sw-l2-01 to srv-app-01 (server VLAN),2026-03-03,TCP,931,0.61,0.00,0.00,through two hops
+edge-rtr-01 to branch-rtr-jb (100M WAN),2026-03-03,TCP,94.2,18.70,0.00,0.00,single stream fills the circuit
+edge-rtr-01 to branch-rtr-jb (100M WAN),2026-03-03,TCP-P4,96.8,18.90,0.00,0.00,4 parallel streams - window limited not bandwidth limited
+edge-rtr-01 to branch-rtr-jb (100M WAN),2026-03-03,UDP,95.0,18.80,1.42,0.31,jitter acceptable for voice
+wlc-01 to ap-l1-014 (Wi-Fi 6 client),2026-03-04,TCP,612,3.20,0.00,0.00,5 GHz 80 MHz channel at 3 m
+wlc-01 to ap-l2-021 (Wi-Fi 6 client),2026-03-04,TCP,388,4.10,0.00,0.00,5 GHz at 12 m through one wall
+wlc-01 to ap-l2-021 (Wi-Fi 6 client),2026-03-04,UDP,350,4.30,3.85,1.20,loss rises at range - expected
+srv-esx-01 to nas-backup-01 (storage VLAN),2026-03-05,TCP,9280,0.25,0.00,0.00,10G storage path
+edge-rtr-01 to branch-rtr-sg (50M WAN),2026-03-05,TCP,47.1,26.40,0.00,0.00,within contracted rate
+edge-rtr-01 to branch-rtr-sg (50M WAN),2026-03-05,UDP,48.0,26.60,2.10,0.45,baseline for later comparison
+lab-vm loopback,2026-03-06,TCP,,,,,record your Step 3 result here
+lab-vm loopback,2026-03-06,TCP-P4,,,,,record your Step 4 result here
+lab-vm loopback,2026-03-06,UDP,,,,,record your Step 5 jitter and loss here
+lab-vm loopback,2026-03-06,TCP-R,,,,,record your Step 6 reverse-mode result here

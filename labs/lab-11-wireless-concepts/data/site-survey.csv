@@ -1,0 +1,15 @@
+ssid,bssid,channel,band,rssi_dbm,security,notes
+NETTECH-STAFF,02:1a:2b:00:10:01,1,2.4 GHz,-42,WPA3-SAE,Example row - nearest AP ceiling mount level 3
+NETTECH-STAFF,02:1a:2b:00:10:02,36,5 GHz,-51,WPA3-SAE,Example row - same SSID different radio same AP
+NETTECH-GUEST,02:1a:2b:00:10:03,6,2.4 GHz,-58,WPA2-PSK,Example row - guest portal internet only
+NETTECH-CORP,02:1a:2b:00:20:01,11,2.4 GHz,-67,WPA2-Enterprise,Example row - 802.1X against RADIUS
+NETTECH-CORP,02:1a:2b:00:20:02,44,5 GHz,-61,WPA2-Enterprise,Example row - non-DFS channel
+NETTECH-6E,02:1a:2b:00:30:01,37,6 GHz,-55,WPA3-SAE,Example row - PSC channel WPA3 mandatory
+NEIGHBOUR-CAFE,02:9c:44:00:aa:01,6,2.4 GHz,-74,WPA2-PSK,Example row - co-channel interference with GUEST
+NEIGHBOUR-OFFICE,02:9c:44:00:bb:01,52,5 GHz,-79,WPA2-PSK,Example row - DFS channel radar may force a change
+OLD-PRINTER-AP,02:9c:44:00:cc:01,3,2.4 GHz,-81,WEP,Example row - overlapping channel and broken cipher
+LAB-TEST-AP,02:1a:2b:00:40:01,149,5 GHz,-48,WPA3-Enterprise,Example row - 192-bit mode GCMP-256
+,,,,,,Add your own row here - one per AP your scan finds
+,,,,,,Add your own row here
+,,,,,,Add your own row here
+,,,,,,Add your own row here

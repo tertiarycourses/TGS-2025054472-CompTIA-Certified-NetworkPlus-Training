@@ -1,0 +1,13 @@
+destination,mask,gateway,interface,metric,notes
+10.1.1.0,255.255.255.0,0.0.0.0,a-r,0,Directly connected - subnet A (host a)
+10.2.2.0,255.255.255.0,10.1.1.1,a-r,100,Static route added on host a in Step 5
+0.0.0.0,0.0.0.0,10.1.1.1,a-r,200,Optional default route on host a via R1
+10.1.1.0,255.255.255.0,0.0.0.0,r-a,0,Directly connected on router R1 - subnet A side
+10.2.2.0,255.255.255.0,0.0.0.0,r-b,0,Directly connected on router R1 - subnet B side
+10.2.2.0,255.255.255.0,0.0.0.0,b-r,0,Directly connected - subnet B (host b)
+10.1.1.0,255.255.255.0,10.2.2.1,b-r,100,Static route added on host b in Step 5
+0.0.0.0,0.0.0.0,10.2.2.1,b-r,200,Optional default route on host b via R1
+192.168.30.0,255.255.255.0,10.1.1.1,a-r,100,Planning row - a third subnet behind R1
+192.168.40.0,255.255.255.0,10.2.2.1,b-r,100,Planning row - a fourth subnet behind R1
+172.16.0.0,255.255.0.0,10.1.1.1,a-r,150,Planning row - summarised branch range
+127.0.0.0,255.0.0.0,0.0.0.0,lo,0,Loopback - present in every namespace

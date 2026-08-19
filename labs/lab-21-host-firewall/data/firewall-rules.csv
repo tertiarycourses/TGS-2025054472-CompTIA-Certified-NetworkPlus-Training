@@ -1,0 +1,16 @@
+rule_no,action,direction,protocol,port,source,purpose
+1,deny,incoming,any,any,any,Default-deny baseline - nothing enters unless a rule permits it
+2,allow,outgoing,any,any,any,Default-allow outbound so the host can reach apt and DNS
+3,allow,incoming,tcp,22,any,Remote administration over SSH - added BEFORE enabling to avoid lockout
+4,allow,incoming,tcp,3306,10.0.0.0/8,MySQL reachable only from the internal RFC 1918 estate
+5,allow,incoming,tcp,443,any,Public HTTPS for the nginx site built in Lab 22
+6,allow,incoming,tcp,80,any,Plain HTTP - kept only for the ACME redirect to 443
+7,allow,incoming,udp,53,10.0.0.0/8,Internal DNS resolver queries from the corporate estate
+8,allow,incoming,udp,161,10.10.20.0/24,SNMP polls from the NMS subnet only
+9,allow,incoming,udp,514,10.10.20.0/24,Syslog ingest from managed devices on the NMS subnet
+10,allow,incoming,udp,51820,203.0.113.0/24,WireGuard tunnel from the branch site built in Lab 24
+11,deny,incoming,tcp,23,any,Telnet is cleartext - explicitly denied and logged
+12,deny,incoming,tcp,3389,any,RDP has no business on a Linux host - explicit deny
+13,deny,incoming,tcp,445,any,SMB blocked at the host edge
+14,allow,incoming,icmp,any,10.0.0.0/8,Allow internal ping for troubleshooting in Labs 28-29
+15,deny,incoming,tcp,9999,any,Unused high port - proves the default-deny stance in verify.sh

@@ -7,6 +7,17 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 **Required software (free, pre-installed):**
 - `iputils-ping`
 
+**Files in this lab folder:**
+
+| File | Use |
+|------|-----|
+| `run.sh` | runs the DF-bit probe sequence (Steps 1–5) and restores the MTU at the end |
+| `cleanup.sh` | puts `eth0`'s MTU back to 1500 if `run.sh` was interrupted mid-lab |
+| `checklist.md` | tick-box list of everything you should be able to do by the end |
+
+> **This lab changes interface state.** Step 4 lowers `eth0`'s MTU to 1400.
+> Always finish with Step 5 (or `./cleanup.sh`) so the next lab starts clean.
+
 ---
 
 ## Step 1 — See your interface MTU
@@ -64,6 +75,16 @@ Now the largest payload that fits is `1400 − 28 = 1372`.
 ip link set eth0 mtu 1500
 ```
 
+Steps 1–5 are scripted end to end: `./run.sh` runs every probe above and restores
+the MTU to 1500 on the way out. If you interrupted it (or ran the steps by hand
+and stopped part way), run:
+
+```bash
+./cleanup.sh
+```
+
+That is the safety net — it puts `eth0` back to `mtu 1500` and confirms it.
+
 ---
 
 ## Step 6 — When MTU mismatch causes blackholes
@@ -79,3 +100,10 @@ ICMP-blocking firewalls strip the “Fragmentation Needed” message, so the sen
 - The maths: payload = MTU − 20 (IP) − 8 (ICMP/UDP) or − 20 (TCP).
 - How `-M do` simulates Path MTU Discovery.
 - Why ICMP filtering breaks PMTUD and how MSS clamping rescues TCP.
+
+---
+
+## Before you leave
+
+Confirm `ip -brief link show eth0` reports `mtu 1500` (run `./cleanup.sh` if not),
+then work through `checklist.md` and tick every line.

@@ -8,6 +8,22 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 - `wireguard`
 - `wireguard-tools`
 
+**Files in this lab folder:**
+
+| File | Use |
+|---|---|
+| `wg0-a.conf` | site-a's tunnel as a real WireGuard config (placeholder keys) |
+| `wg0-b.conf` | site-b's tunnel as a real WireGuard config (placeholder keys) |
+| `setup.sh` | Runs Steps 1–5: namespaces, keys, interfaces, tunnel up |
+| `verify.sh` | Pass/fail check — handshake established and ping crosses the tunnel |
+| `cleanup.sh` | **Run before Lab 25** — tears the interfaces down, deletes the keys |
+| `checklist.md` | Tick-list of everything you should be able to show the trainer |
+
+> **No real keys ship with this lab.** `wg0-a.conf` and `wg0-b.conf` contain only
+> `<PASTE_..._HERE>` placeholders. You generate the real keys yourself in Step 3;
+> `setup.sh` substitutes them into working copies under `/tmp`, and `cleanup.sh`
+> deletes them again.
+
 ---
 
 ## Step 1 — Install WireGuard
@@ -15,6 +31,10 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 ```bash
 apt update && apt install -y wireguard wireguard-tools
 ```
+
+> **Shortcut:** `./setup.sh` performs Steps 1–5 exactly as written below. Read the
+> steps first — 24 commands is a lot to mistype, which is precisely why the
+> script exists.
 
 ---
 
@@ -56,6 +76,50 @@ ip netns exec site-b wg set wg0 \
   endpoint 127.0.0.1:51820
 ```
 
+### The same tunnel as config files
+
+Production WireGuard is declared in a file, not typed in as flags. `wg0-a.conf`
+and `wg0-b.conf` in this folder are exactly the tunnel above, in that form:
+
+**`wg0-a.conf`**
+```ini
+[Interface]
+Address    = 10.99.0.1/24
+ListenPort = 51820
+PrivateKey = <PASTE_SITE_A_PRIVATE_KEY_HERE>
+
+[Peer]
+PublicKey  = <PASTE_SITE_B_PUBLIC_KEY_HERE>
+AllowedIPs = 10.99.0.2/32
+```
+
+**`wg0-b.conf`**
+```ini
+[Interface]
+Address    = 10.99.0.2/24
+ListenPort = 51821
+PrivateKey = <PASTE_SITE_B_PRIVATE_KEY_HERE>
+
+[Peer]
+PublicKey  = <PASTE_SITE_A_PUBLIC_KEY_HERE>
+AllowedIPs = 10.99.0.1/32
+Endpoint   = 127.0.0.1:51820
+PersistentKeepalive = 25
+```
+
+Paste your own keys over the placeholders — `PrivateKey` from that peer's own
+`.key` file, `PublicKey` from the *other* peer's `.pub` file — then apply them.
+`wg setconf` does not understand the wg-quick-only `Address` line, so drop it and
+keep using `ip addr add`:
+
+```bash
+sed '/^Address/d' wg0-a.conf > /tmp/wg0-a.conf   # after pasting your keys
+ip netns exec site-a wg setconf wg0 /tmp/wg0-a.conf
+```
+
+A private key must never be committed to a repository, an image, or a ticket —
+that single line is the entire security of the tunnel.
+
 ---
 
 ## Step 5 — Bring tunnels up and test
@@ -78,6 +142,17 @@ ip netns exec site-a wg show
 
 You will see the peer’s public key, last handshake time, and bytes transferred.
 
+Check it objectively:
+
+```bash
+./verify.sh
+```
+
+It confirms both namespaces exist, `wg0` is up and addressed in each, each peer
+holds the other's public key, a handshake has actually completed
+(`latest-handshakes` is non-zero), encrypted bytes have moved, and the ping
+crosses the tunnel.
+
 ---
 
 ## Step 7 — Clean up
@@ -87,6 +162,16 @@ ip netns del site-a
 ip netns del site-b
 rm /tmp/a.key /tmp/a.pub /tmp/b.key /tmp/b.pub
 ```
+
+Or run the script, which also brings `wg0` down first and removes the working
+configs under `/tmp`:
+
+```bash
+./cleanup.sh
+```
+
+Leaving `site-a` / `site-b` behind will confuse the namespace-based labs later in
+the course, so do not skip it. Finish by ticking off `checklist.md`.
 
 ---
 

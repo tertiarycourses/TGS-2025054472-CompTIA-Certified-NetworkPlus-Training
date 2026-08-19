@@ -138,7 +138,7 @@ Command-line tools used inside the playground (installed with `apt`): `tcpdump`,
 
 ```
 ├── courseware/                 # Slide deck, Lesson Plan, Learner Guide (+ PDFs)
-│   ├── CompTIA Network+ (N10-009)-v2.0.pptx / .pdf
+│   ├── CompTIA Network+ (N10-009)-v2.1.pptx / .pdf
 │   ├── LP-CompTIA Network+ (N10-009).docx / .pdf
 │   ├── LG-CompTIA Network+ (N10-009).docx / .pdf
 │   └── archive/                # Superseded versions

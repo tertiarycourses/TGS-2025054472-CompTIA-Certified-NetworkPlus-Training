@@ -5,6 +5,17 @@ In this lab you will capture real network traffic and map each protocol header t
 Run all commands on the Killercoda Ubuntu Playground:
 https://killercoda.com/playgrounds/scenario/ubuntu
 
+**Files in this lab folder**
+
+| File | Use |
+|---|---|
+| `run.sh` | runs the whole capture + traffic sequence (Steps 1–7) in one go |
+| `verify.sh` | checks the saved `osi-lab.pcap` exists, is non-empty and decodes |
+| `checklist.md` | tick-box list of everything you should be able to do by the end |
+
+Work through the steps by hand first — the point of the lab is reading the packets.
+Use `./run.sh` if you fall behind or want to regenerate a capture quickly.
+
 ---
 
 ## Step 1 — Install the capture tools
@@ -117,6 +128,18 @@ Download `osi-lab.pcap` from the Killercoda editor, then open the analyzer in a 
 👉 https://alfredang.github.io/pcapanalyzer/
 
 Load the file and step through each packet layer-by-layer — the analyzer decodes the Layer 2 Ethernet header, the Layer 3 IP header, the Layer 4 TCP header, and the Layer 7 HTTP payload, matching the mapping table from Step 5.
+
+Before you download it, confirm the capture actually holds packets:
+
+```bash
+./verify.sh
+```
+
+It prints a `PASS:`/`FAIL:` line for each check and exits non-zero if the `.pcap` is
+missing or empty — the usual cause being that no traffic was generated while `tcpdump`
+was running.
+
+Finally, work through `checklist.md` and tick off each outcome.
 
 ---
 

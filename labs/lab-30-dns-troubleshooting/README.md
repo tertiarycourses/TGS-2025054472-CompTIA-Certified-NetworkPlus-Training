@@ -8,6 +8,15 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 - `dnsutils`
 - `systemd-resolved` (pre-installed)
 
+**Files in this lab folder:**
+
+| File | Use |
+|------|-----|
+| `break.sh` | injects a broken resolver so you can diagnose a real fault (Step 8) — backs up `/etc/resolv.conf` first |
+| `cleanup.sh` | restores the **original** `/etc/resolv.conf` from `/tmp/resolv.conf.bak` |
+| `verify.sh` | objective pass/fail check that resolution is working again |
+| `checklist.md` | tick-box list of everything you should be able to do by the end |
+
 ---
 
 ## Step 1 — Install dnsutils
@@ -82,7 +91,59 @@ The statistics counter will reset.
 
 ---
 
+## Step 8 — Diagnose an injected fault
+
+Now put the theory to work on a fault you did not create.
+
+```bash
+./break.sh
+```
+
+`break.sh` copies your current `/etc/resolv.conf` to `/tmp/resolv.conf.bak`
+**before** it changes anything, then repoints the system at `10.99.0.53` — an
+address that goes nowhere.
+
+Reproduce the symptom:
+
+```bash
+dig example.com +short
+ping -c2 example.com
+```
+
+Now diagnose it with the Step 2 and Step 3 commands:
+
+```bash
+cat /etc/resolv.conf
+resolvectl status | head -20
+dig @1.1.1.1 example.com +short
+dig @8.8.8.8 example.com +short
+```
+
+The key observation: querying `1.1.1.1` **directly** works, so the network path
+and the upstream are both fine — the fault is the *configured resolver*, not
+connectivity. That distinction is the whole point of Step 3 of this lab.
+
+Then restore and confirm:
+
+```bash
+./cleanup.sh
+./verify.sh
+```
+
+`cleanup.sh` puts the original `/etc/resolv.conf` back (symlink and all) and
+flushes the cache. `verify.sh` prints `PASS:` / `FAIL:` lines and exits non-zero
+if anything is still broken.
+
+---
+
 ## What you learned
 - How to identify which resolver Linux is using.
 - How `+trace` walks the DNS hierarchy from the root.
 - The meaning of NXDOMAIN, SERVFAIL, and REFUSED.
+- How to tell a **resolver** fault from a **connectivity** fault by querying an upstream directly.
+
+---
+
+## Before you leave
+
+Run `./cleanup.sh` if you have not already, then work through `checklist.md` and tick every line.

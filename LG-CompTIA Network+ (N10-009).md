@@ -1,6 +1,6 @@
 # CompTIA Certified Network+ Training (N10-009) — Learner Guide
 
-**WSQ Course Code:** TGS-2025054472  |  **Conducted by:** Tertiary Infotech Academy Pte Ltd (UEN 201200696W)  |  **Version v2.0 · 19 August 2026**
+**WSQ Course Code:** TGS-2025054472  |  **Conducted by:** Tertiary Infotech Academy Pte Ltd (UEN 201200696W)  |  **Version v2.1 · 19 August 2026**
 
 ## Contents
 
@@ -91,6 +91,20 @@ apt update             # refresh package lists
 ping -c 2 8.8.8.8      # outbound connectivity
 ```
 
+**What ships with every lab**
+
+Each lab is a folder, not a single file. Alongside the lab README you will find the supporting files it needs, so you never retype a long configuration by hand. Every command is still printed in the steps, so you can always work through a lab manually.
+
+- README.md — the lab itself: the concept, every command, the verify step and troubleshooting.
+- checklist.md — a tick-box list of what you must achieve; use it to self-check before moving on.
+- setup.sh / run.sh — environment prep and the command sequence for the longer labs.
+- verify.sh — an objective PASS/FAIL check that the lab actually worked.
+- cleanup.sh — restores the machine so the next lab starts from a clean state.
+- Service configs (for example dhcpd.conf, zone files, wg0.conf, rule files) — copy them into place.
+- data/*.csv — subnet plans, port lists, log samples and baseline sheets to work from and fill in.
+
+Run a script with ./setup.sh from inside the lab folder. If a script will not execute, make it executable first with chmod +x *.sh.
+
 **Conventions used in every lab**
 
 - Commands are run in the Killercoda terminal; a leading sudo is shown where root is required.
@@ -125,6 +139,14 @@ Goal: Capture HTTP traffic with tcpdump on a Killercoda Ubuntu host, generate re
 **What you'll build**
 
 A live capture and a saved .pcap where you can point at every header and name its OSI layer.   (Tools: tcpdump, curl, Killercoda Ubuntu, TIS PCAP Analyzer (alfredang.github.io/pcapanalyzer).)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `run.sh`
+- `verify.sh`
 
 ![Figure 1 — how Lab 1 runs: the workflow you will follow.](courseware/assets/figures/lab-01-process.png)
 
@@ -201,6 +223,14 @@ Goal: Use the TIS IP Calculator to break 192.168.10.0/24 into four /26 subnets, 
 
 A completed four-subnet plan and a Linux interface carrying 192.168.10.65/26 as a labelled secondary address.   (Tools: TIS IP Calculator (alfredang.github.io/ipcalculator), iproute2, Killercoda Ubuntu.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `answers.md`
+- `checklist.md`
+- `data/subnet-plan.csv`
+
 ![Figure 2 — how Lab 2 runs: the workflow you will follow.](courseware/assets/figures/lab-02-process.png)
 
 *Figure 2 — how Lab 2 runs: the workflow you will follow.*
@@ -264,6 +294,14 @@ Goal: Break down 2001:db8::/64 in the TIS IP Calculator's IPv6 mode, add a docum
 **What you'll build**
 
 An interface holding both a link-local fe80:: address and a global 2001:db8::10/64, verified by ping.   (Tools: TIS IP Calculator (alfredang.github.io/ipcalculator), iproute2, ping6, Killercoda.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `answers.md`
+- `checklist.md`
+- `verify.sh`
 
 ![Figure 3 — how Lab 3 runs: the workflow you will follow.](courseware/assets/figures/lab-03-process.png)
 
@@ -340,6 +378,13 @@ Goal: Enumerate the listening TCP/UDP sockets on your own host with ss, scan the
 
 A completed port-to-protocol map covering your own listeners and the remote scan results.   (Tools: nmap, ss, net-tools (netstat), getent, Killercoda Ubuntu.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `data/well-known-ports.csv`
+
 ![Figure 4 — how Lab 4 runs: the workflow you will follow.](courseware/assets/figures/lab-04-process.png)
 
 *Figure 4 — how Lab 4 runs: the workflow you will follow.*
@@ -396,6 +441,14 @@ Goal: Use dig to query A, AAAA, MX, TXT, NS, CNAME, PTR, SOA and SRV records aga
 **What you'll build**
 
 A worked set of dig queries — one per record type on the exam — with each answer interpreted.   (Tools: dig, nslookup, host (dnsutils), Killercoda Ubuntu.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `run.sh`
+- `data/dns-records.csv`
 
 ![Figure 5 — how Lab 5 runs: the workflow you will follow.](courseware/assets/figures/lab-05-process.png)
 
@@ -483,6 +536,14 @@ Goal: Run tcpdump against UDP ports 67/68 while releasing and re-requesting your
 
 A capture showing the full DORA exchange and a freshly renewed lease on eth0.   (Tools: isc-dhcp-client (dhclient), tcpdump, Killercoda Ubuntu.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `run.sh`
+
 ![Figure 6 — how Lab 6 runs: the workflow you will follow.](courseware/assets/figures/lab-06-process.png)
 
 *Figure 6 — how Lab 6 runs: the workflow you will follow.*
@@ -545,6 +606,15 @@ Goal: Recreate cloud VPC building blocks on one Linux host: two network namespac
 **What you'll build**
 
 Two isolated 'VMs' (web and db) pinging each other through a Linux bridge — a working VPC subnet.   (Tools: iproute2 (ip netns, ip link, veth, bridge), Killercoda Ubuntu.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `setup.sh`
+- `verify.sh`
 
 ![Figure 7 — how Lab 7 runs: the workflow you will follow.](courseware/assets/figures/lab-07-process.png)
 
@@ -638,6 +708,16 @@ Goal: Create three network namespaces (host A, router R1, host B), wire them wit
 
 A working routed path A -> R1 -> B with hand-written static routes on both end hosts.   (Tools: iproute2, ip netns, sysctl.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `setup.sh`
+- `verify.sh`
+- `data/routing-table.csv`
+
 ![Figure 8 — how Lab 8 runs: the workflow you will follow.](courseware/assets/figures/lab-08-process.png)
 
 *Figure 8 — how Lab 8 runs: the workflow you will follow.*
@@ -717,6 +797,16 @@ Goal: Load the 8021q kernel module, create eth0.10 and eth0.20 sub-interfaces ea
 **What you'll build**
 
 Two VLAN sub-interfaces on one NIC — a Linux model of a trunk port — plus a captured 802.1Q tag.   (Tools: iproute2, 8021q module, tcpdump.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `setup.sh`
+- `verify.sh`
+- `data/vlan-plan.csv`
 
 ![Figure 9 — how Lab 9 runs: the workflow you will follow.](courseware/assets/figures/lab-09-process.png)
 
@@ -798,6 +888,15 @@ Goal: Install ifenslave, load the bonding driver in 802.3ad mode, create bond0, 
 
 A bond0 interface running LACP with aggregator and slave state visible in /proc/net/bonding/bond0.   (Tools: ifenslave, bonding module, iproute2.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `setup.sh`
+- `verify.sh`
+
 ![Figure 10 — how Lab 10 runs: the workflow you will follow.](courseware/assets/figures/lab-10-process.png)
 
 *Figure 10 — how Lab 10 runs: the workflow you will follow.*
@@ -872,6 +971,13 @@ Goal: Use iw on a wireless laptop (or WiFi Analyzer / Wireless Diagnostics) to s
 
 A site-survey table of nearby APs: SSID, band, channel, signal (dBm) and security mode.   (Tools: iw, wavemon, WiFi Analyzer (Windows), Wireless Diagnostics (macOS).)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `data/site-survey.csv`
+
 ![Figure 11 — how Lab 11 runs: the workflow you will follow.](courseware/assets/figures/lab-11-process.png)
 
 *Figure 11 — how Lab 11 runs: the workflow you will follow.*
@@ -919,6 +1025,15 @@ Goal: Rebuild a namespace client behind the host, enable forwarding, add a MASQU
 **What you'll build**
 
 A namespace reaching the Internet through the host's IP — many-to-one PAT exactly as a SOHO router does it.   (Tools: iptables, conntrack, iproute2, curl.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `setup.sh`
+- `verify.sh`
 
 ![Figure 12 — how Lab 12 runs: the workflow you will follow.](courseware/assets/figures/lab-12-process.png)
 
@@ -993,6 +1108,16 @@ Goal: Install isc-dhcp-server, create a dummy interface at 10.50.0.1/24, write a
 **What you'll build**
 
 A running authoritative DHCP server scoped to 10.50.0.100-150 on dum0, leaving eth0 untouched.   (Tools: isc-dhcp-server, iproute2, systemd.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `dhcpd.conf`
+- `setup.sh`
+- `verify.sh`
 
 ![Figure 13 — how Lab 13 runs: the workflow you will follow.](courseware/assets/figures/lab-13-process.png)
 
@@ -1073,6 +1198,19 @@ Goal: Install bind9, write a zone file for lab.local with SOA, NS, A and MX reco
 **What you'll build**
 
 A local BIND9 server answering authoritatively for lab.local, with validated zone syntax.   (Tools: bind9, dnsutils (dig), named-checkzone.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `db.10.0.0`
+- `db.lab.local`
+- `named.conf.local`
+- `named.conf.local.reverse`
+- `setup.sh`
+- `verify.sh`
 
 ![Figure 14 — how Lab 14 runs: the workflow you will follow.](courseware/assets/figures/lab-14-process.png)
 
@@ -1163,6 +1301,17 @@ Goal: Install snmpd on Ubuntu, configure a read-only v2c community string, then 
 
 A polling-ready SNMP agent on UDP/161 answering v2c queries, plus walked system and interface OIDs.   (Tools: snmpd, snmpwalk, snmpget, snmp-mibs-downloader.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `setup.sh`
+- `snmpd.conf.lab`
+- `verify.sh`
+- `data/device-inventory.csv`
+
 ![Figure 15 — how Lab 15 runs: the workflow you will follow.](courseware/assets/figures/lab-15-process.png)
 
 *Figure 15 — how Lab 15 runs: the workflow you will follow.*
@@ -1230,6 +1379,16 @@ Goal: Run a flow exporter (fprobe) and collector (nfcapd) on one VM, generate we
 **What you'll build**
 
 A working exporter-to-collector NetFlow v5 pipeline with nfdump top-N reports of your own traffic.   (Tools: fprobe, nfcapd, nfdump, curl, ping.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `run.sh`
+- `setup.sh`
+- `verify.sh`
 
 ![Figure 16 — how Lab 16 runs: the workflow you will follow.](courseware/assets/figures/lab-16-process.png)
 
@@ -1305,6 +1464,18 @@ Goal: Configure rsyslog to receive on TCP/514 and forward to itself over loopbac
 
 A send-and-receive rsyslog collector on TCP/514 with verified test events and regex-filtered output.   (Tools: rsyslog, logger, ss, grep -E, TIS Regex Generator.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `50-forward.conf`
+- `checklist.md`
+- `cleanup.sh`
+- `setup.sh`
+- `verify.sh`
+- `data/sample-syslog.csv`
+- `data/sample-syslog.log`
+
 ![Figure 17 — how Lab 17 runs: the workflow you will follow.](courseware/assets/figures/lab-17-process.png)
 
 *Figure 17 — how Lab 17 runs: the workflow you will follow.*
@@ -1379,6 +1550,14 @@ Goal: Install chrony (the modern ntpd replacement), inspect the selected time so
 
 A VM synchronised over UDP/123 with multiple NTP sources and a readable chronyc tracking report.   (Tools: chrony, chronyc.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `chrony.conf.lab`
+- `verify.sh`
+
 ![Figure 18 — how Lab 18 runs: the workflow you will follow.](courseware/assets/figures/lab-18-process.png)
 
 *Figure 18 — how Lab 18 runs: the workflow you will follow.*
@@ -1446,6 +1625,15 @@ Goal: Initialise a git repository in /etc, commit a baseline of the critical net
 **What you'll build**
 
 A version-controlled /etc with a baseline commit, a tracked change, and a demonstrated one-command rollback.   (Tools: git.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `run.sh`
+- `verify.sh`
+- `data/change-log.csv`
 
 ![Figure 19 — how Lab 19 runs: the workflow you will follow.](courseware/assets/figures/lab-19-process.png)
 
@@ -1520,6 +1708,16 @@ Goal: Run an iperf3 server as a daemon and test against it: a 10-second TCP thro
 **What you'll build**
 
 A recorded performance baseline: TCP bitrate, parallel-stream totals, UDP jitter/loss and reverse-direction results.   (Tools: iperf3.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `run.sh`
+- `verify.sh`
+- `data/baseline-metrics.csv`
 
 ![Figure 20 — how Lab 20 runs: the workflow you will follow.](courseware/assets/figures/lab-20-process.png)
 
@@ -1609,6 +1807,16 @@ Goal: Set a deny-by-default inbound policy with UFW, permit SSH globally and MyS
 
 A host firewall that denies all inbound traffic except SSH and source-restricted MySQL.   (Tools: ufw, iptables.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `setup.sh`
+- `verify.sh`
+- `data/firewall-rules.csv`
+
 ![Figure 21 — how Lab 21 runs: the workflow you will follow.](courseware/assets/figures/lab-21-process.png)
 
 *Figure 21 — how Lab 21 runs: the workflow you will follow.*
@@ -1683,6 +1891,17 @@ Goal: Create an RSA-2048 self-signed certificate with openssl req -x509, configu
 
 An HTTPS server on 443 presenting your own certificate, plus a client-side view of the TLS 1.3 handshake.   (Tools: openssl, nginx, curl.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `lab-openssl.cnf`
+- `nginx-tls.conf`
+- `setup.sh`
+- `verify.sh`
+
 ![Figure 22 — how Lab 22 runs: the workflow you will follow.](courseware/assets/figures/lab-22-process.png)
 
 *Figure 22 — how Lab 22 runs: the workflow you will follow.*
@@ -1750,6 +1969,16 @@ Goal: Generate an Ed25519 key pair, install the public key in authorized_keys, p
 **What you'll build**
 
 An SSH daemon that accepts only public-key authentication, with root password login prohibited.   (Tools: openssh-server, openssh-client, ssh-keygen.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `sshd_hardening.conf`
+- `verify.sh`
+- `data/hardening-checklist.csv`
 
 ![Figure 23 — how Lab 23 runs: the workflow you will follow.](courseware/assets/figures/lab-23-process.png)
 
@@ -1819,6 +2048,17 @@ Goal: Create two namespaces as VPN endpoints, generate Curve25519 key pairs, con
 **What you'll build**
 
 An encrypted point-to-point tunnel (10.99.0.1 <-> 10.99.0.2) between two namespaces acting as two sites.   (Tools: wireguard, wireguard-tools, iproute2.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `setup.sh`
+- `verify.sh`
+- `wg0-a.conf`
+- `wg0-b.conf`
 
 ![Figure 24 — how Lab 24 runs: the workflow you will follow.](courseware/assets/figures/lab-24-process.png)
 
@@ -1912,6 +2152,14 @@ Goal: SYN-scan all 65535 TCP ports on your own host, identify service versions a
 
 A port-by-port inventory of your host's attack surface, with an unneeded service disabled and verified closed.   (Tools: nmap, ss, systemctl.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `run.sh`
+- `data/port-scan-findings.csv`
+
 ![Figure 25 — how Lab 25 runs: the workflow you will follow.](courseware/assets/figures/lab-25-process.png)
 
 *Figure 25 — how Lab 25 runs: the workflow you will follow.*
@@ -1985,6 +2233,16 @@ Goal: Install Suricata, pull the Emerging Threats ruleset, start the engine on e
 **What you'll build**
 
 A live IDS on eth0 with a current ET ruleset, plus a captured alert you can parse as JSON with jq.   (Tools: suricata, suricata-update, jq, curl, TIS Cybersecurity Simulator.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `local.rules`
+- `setup.sh`
+- `verify.sh`
 
 ![Figure 26 — how Lab 26 runs: the workflow you will follow.](courseware/assets/figures/lab-26-process.png)
 
@@ -2066,6 +2324,16 @@ Goal: Insert an ACCEPT rule for TCP 3306 from 10.0.0.0/24 above an appended DROP
 **What you'll build**
 
 A working two-rule ACL on the INPUT chain proving top-down, first-match evaluation, saved to survive reboot.   (Tools: iptables, netcat, iptables-persistent.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `setup.sh`
+- `verify.sh`
+- `data/acl-plan.csv`
 
 ![Figure 27 — how Lab 27 runs: the workflow you will follow.](courseware/assets/figures/lab-27-process.png)
 
@@ -2160,6 +2428,14 @@ Goal: Use ip and ethtool on a Killercoda Ubuntu VM to read interface state, veri
 
 A verified eth0: link state decoded, speed/duplex confirmed and every error counter read and interpreted.   (Tools: ethtool, iproute2, Killercoda Ubuntu playground.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `run.sh`
+- `data/interface-errors.csv`
+
 ![Figure 28 — how Lab 28 runs: the workflow you will follow.](courseware/assets/figures/lab-28-process.png)
 
 *Figure 28 — how Lab 28 runs: the workflow you will follow.*
@@ -2234,6 +2510,14 @@ Goal: Baseline RTT and loss with ping, expose every L3 hop with traceroute, comb
 
 An mtr loss report for 8.8.8.8 and a TCP traceroute that passes firewalls which block ICMP.   (Tools: iputils-ping, traceroute, mtr-tiny.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `run.sh`
+- `data/latency-log.csv`
+
 ![Figure 29 — how Lab 29 runs: the workflow you will follow.](courseware/assets/figures/lab-29-process.png)
 
 *Figure 29 — how Lab 29 runs: the workflow you will follow.*
@@ -2296,6 +2580,15 @@ Goal: Identify which resolver the system really uses, compare answers from 1.1.1
 **What you'll build**
 
 A decoded dig +trace delegation chain plus a flushed resolver cache and the NXDOMAIN/SERVFAIL/REFUSED decode.   (Tools: dnsutils (dig), systemd-resolved (resolvectl).)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `break.sh`
+- `checklist.md`
+- `cleanup.sh`
+- `verify.sh`
 
 ![Figure 30 — how Lab 30 runs: the workflow you will follow.](courseware/assets/figures/lab-30-process.png)
 
@@ -2364,6 +2657,14 @@ Goal: View and decode neighbour states, probe the default gateway with arping, r
 **What you'll build**
 
 A decoded neighbour table with a static entry added and flushed, plus a duplicate-IP probe of your own address.   (Tools: iputils-arping, iproute2, ndisc6.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `run.sh`
+- `data/arp-table.csv`
 
 ![Figure 31 — how Lab 31 runs: the workflow you will follow.](courseware/assets/figures/lab-31-process.png)
 
@@ -2438,6 +2739,14 @@ Goal: Capture ten DNS packets with a BPF capture filter, dissect them with tshar
 **What you'll build**
 
 A dns.pcap captured with tcpdump and read three ways: tcpdump summary, tshark fields and the TIS PCAP Analyzer UI.   (Tools: tcpdump, tshark, TIS PCAP Analyzer (alfredang.github.io/pcapanalyzer).)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `run.sh`
+- `verify.sh`
 
 ![Figure 32 — how Lab 32 runs: the workflow you will follow.](courseware/assets/figures/lab-32-process.png)
 
@@ -2515,6 +2824,14 @@ Goal: Compute the ICMP payload maths (MTU minus 28), send Don't-Fragment pings a
 
 A demonstrated 1472-byte pass / 1500-byte 'message too long' fail, repeated at MTU 1400, and a restored interface.   (Tools: iputils-ping, iproute2.)
 
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `run.sh`
+
 ![Figure 33 — how Lab 33 runs: the workflow you will follow.](courseware/assets/figures/lab-33-process.png)
 
 *Figure 33 — how Lab 33 runs: the workflow you will follow.*
@@ -2583,6 +2900,15 @@ Goal: Print the routing table, query the kernel's route choice for two destinati
 **What you'll build**
 
 A routing table with a temporary 10.99.0.0/24 static route, proven with ip route get and cleanly removed.   (Tools: iproute2, traceroute.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `break.sh`
+- `checklist.md`
+- `cleanup.sh`
+- `verify.sh`
 
 ![Figure 34 — how Lab 34 runs: the workflow you will follow.](courseware/assets/figures/lab-34-process.png)
 
@@ -2657,6 +2983,15 @@ Goal: Baseline RTT, then use tc netem to inject 200 ms delay, +/-50 ms jitter an
 **What you'll build**
 
 A NIC that demonstrably ran at +200 ms delay, 5% loss and a 1 Mbit/s cap - and a clean qdisc afterwards.   (Tools: iproute2 (tc/netem/tbf), iperf3.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `checklist.md`
+- `cleanup.sh`
+- `run.sh`
+- `setup.sh`
 
 ![Figure 35 — how Lab 35 runs: the workflow you will follow.](courseware/assets/figures/lab-35-process.png)
 
@@ -2737,6 +3072,16 @@ Goal: Walk the layered triage: prove the TCP handshake with nc -zv, validate the
 **What you'll build**
 
 A complete layer-by-layer triage of example.com:443 with a timing breakdown that names the slow phase.   (Tools: curl, netcat-openbsd, openssl.)
+
+**Files provided with this lab**
+
+The lab folder ships these files so you do not have to retype long configurations. Every command is still shown in the steps below.
+
+- `break.sh`
+- `checklist.md`
+- `cleanup.sh`
+- `run.sh`
+- `troubleshooting-worksheet.md`
 
 ![Figure 36 — how Lab 36 runs: the workflow you will follow.](courseware/assets/figures/lab-36-process.png)
 

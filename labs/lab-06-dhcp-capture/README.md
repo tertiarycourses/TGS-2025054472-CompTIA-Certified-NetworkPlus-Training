@@ -8,6 +8,20 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 - `isc-dhcp-client`
 - `tcpdump`
 
+**Files in this lab folder**
+
+| File | Use |
+|---|---|
+| `run.sh` | runs the capture + release + renew sequence (Steps 1–5) in one go |
+| `cleanup.sh` | stops any leftover `tcpdump` and renews the lease so the next lab starts clean |
+| `checklist.md` | tick-box list of everything you should be able to do by the end |
+
+The timing matters in this lab — the capture must already be running before you release
+the lease. Follow Steps 1–5 by hand, or run `./run.sh` which sequences them for you.
+
+> This lab briefly drops your IP address. If the terminal stops responding after
+> Step 3, the renew in Step 4 will restore it; `./cleanup.sh` also forces a renew.
+
 ---
 
 ## Step 1 — Install the tools
@@ -57,6 +71,25 @@ Watch the tcpdump output — you should see:
 ```bash
 kill %1 2>/dev/null
 ```
+
+---
+
+## Step 6 — Clean up
+
+This lab changes your interface's address state, so restore it before moving on:
+
+```bash
+./cleanup.sh
+```
+
+It stops any `tcpdump` this lab started and renews the DHCP lease on `eth0`, then prints
+the resulting address. Confirm you have a routable IPv4 address again:
+
+```bash
+ip -4 addr show eth0
+```
+
+Finally, work through `checklist.md` and tick off each outcome.
 
 ---
 

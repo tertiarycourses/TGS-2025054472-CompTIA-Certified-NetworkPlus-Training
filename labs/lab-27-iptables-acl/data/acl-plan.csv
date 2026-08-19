@@ -1,0 +1,17 @@
+sequence,action,protocol,source,destination,port,purpose
+10,ACCEPT,tcp,10.0.0.0/24,any,3306,Application subnet is the only network allowed to reach MySQL
+20,DROP,tcp,any,any,3306,Catch-all deny for MySQL - must be evaluated AFTER sequence 10
+30,ACCEPT,tcp,10.0.0.0/8,any,22,SSH administration from the internal estate only
+40,DROP,tcp,any,any,22,Deny SSH from everywhere else - the internet never reaches this port
+50,ACCEPT,tcp,any,any,443,Public HTTPS to the nginx site built in Lab 22
+60,ACCEPT,tcp,any,any,80,Public HTTP kept only for the redirect to 443
+70,ACCEPT,udp,10.0.0.0/24,any,53,DNS queries from the application subnet to the internal resolver
+80,ACCEPT,udp,10.10.20.0/24,any,161,SNMP polls from the NMS subnet only
+90,ACCEPT,udp,10.10.20.0/24,any,514,Syslog ingest from managed devices on the NMS subnet
+100,ACCEPT,udp,203.0.113.0/24,any,51820,WireGuard tunnel from the branch site built in Lab 24
+110,ACCEPT,icmp,10.0.0.0/8,any,any,Allow internal ping and traceroute for the Domain 5 troubleshooting labs
+120,DROP,tcp,any,any,23,Telnet is cleartext - explicitly denied
+130,DROP,tcp,any,any,445,SMB has no business crossing this boundary
+140,DROP,tcp,any,any,5432,PostgreSQL is loopback-only - deny any remote attempt
+150,ACCEPT,tcp,any,any,any,Established and related return traffic for outbound sessions
+160,DROP,any,any,any,any,Implicit deny-all - the last line of every ACL

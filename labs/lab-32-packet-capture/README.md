@@ -11,6 +11,14 @@ Run the Linux commands on https://killercoda.com/playgrounds/scenario/ubuntu
 - `tcpdump`
 - `tshark` (text Wireshark)
 
+**Files in this lab folder:**
+
+| File | Use |
+|------|-----|
+| `run.sh` | runs the capture + filter + export sequence (Steps 1–6) — or follow the steps by hand |
+| `verify.sh` | objective pass/fail check that `/tmp/dns.pcap` exists, decodes, and holds DNS queries |
+| `checklist.md` | tick-box list of everything you should be able to do by the end |
+
 ---
 
 ## Step 1 — Install both tools
@@ -86,6 +94,19 @@ Copy all the printed text into a file called `dns.pcap.b64` on your laptop, then
 
 (Or use `scp` if you have SSH access to the Killercoda VM.)
 
+Steps 1–6 are scripted: run `./run.sh` to install the tools, take the capture,
+run both tshark filters and write `/tmp/dns.pcap.b64` ready to copy out. Then
+confirm the capture is usable before you upload it:
+
+```bash
+./verify.sh
+```
+
+It prints `PASS:` / `FAIL:` lines and exits non-zero if `/tmp/dns.pcap` is
+missing, empty, undecodable, or contains no DNS queries — check this **before**
+opening the analyser, so you never debug the web tool when the problem is the
+capture.
+
 ---
 
 ## Step 7 — Analyse the capture in the TIS PCAP Analyzer
@@ -123,3 +144,9 @@ Using the analyser, answer:
 - The difference between a **capture filter** (BPF) and a **display filter** (`-Y` / web search box).
 - How to capture once and analyse many times by writing to a `.pcap`.
 - How to use the **TIS PCAP Analyzer** at https://alfredang.github.io/pcapanalyzer/ for in-browser, no-install graphical analysis.
+
+---
+
+## Before you leave
+
+Work through `checklist.md` and tick every line.

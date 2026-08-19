@@ -1,0 +1,17 @@
+# Lab 18 — chrony configuration fragment
+#
+# This is the line README Step 4 appends to /etc/chrony/chrony.conf:
+#
+#     cat chrony.conf.lab >> /etc/chrony/chrony.conf
+#     systemctl restart chrony
+#     chronyc sources -v
+#
+# `iburst` sends a quick burst of packets at start-up so the source is
+# selected in seconds instead of minutes.
+#
+# On a production network you would point at your own stratum-2 servers
+# (e.g. srv-ntp-01.nettech.local) rather than a public pool, and add:
+#   allow 10.20.0.0/16     # serve time to the internal estate
+#   local stratum 10       # keep serving if upstream is lost
+
+server time.cloudflare.com iburst

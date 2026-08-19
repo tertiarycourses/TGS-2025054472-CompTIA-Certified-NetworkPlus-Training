@@ -7,6 +7,18 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 **Required software (free, pre-installed):**
 - `iproute2`
 
+**Files in this lab folder:**
+
+| File | Use |
+|------|-----|
+| `break.sh` | deletes the default route so you can diagnose a real fault (Step 8) — backs it up first |
+| `cleanup.sh` | restores the **original** default route from `/tmp/default-route.bak` and removes the test route |
+| `verify.sh` | objective pass/fail check that routing and connectivity are restored |
+| `checklist.md` | tick-box list of everything you should be able to do by the end |
+
+> **This lab changes routing state.** Always finish with Step 6 and `./cleanup.sh`
+> so the next lab starts clean.
+
 ---
 
 ## Step 1 — Print the full routing table
@@ -75,7 +87,59 @@ The longer the prefix, the more specific. `10.99.0.0/24` wins over `10.0.0.0/8` 
 
 ---
 
+## Step 8 — Diagnose an injected fault
+
+Now work a fault you did not create.
+
+```bash
+./break.sh
+```
+
+`break.sh` writes your current default route to `/tmp/default-route.bak`
+**before** it deletes anything, then removes the gateway of last resort.
+
+Reproduce the symptom — note that it is *selective*, the classic
+"I can ping this but not that":
+
+```bash
+ping -c2 $(cat /tmp/default-route.bak | awk '{print $3}')   # local gateway still answers
+ping -c2 8.8.8.8                                            # Network is unreachable
+```
+
+Now diagnose it with the Step 1 and Step 2 commands:
+
+```bash
+ip route
+ip route get 8.8.8.8
+ip route get 10.99.0.5
+```
+
+`ip route` has no `default via …` line, and `ip route get` answers
+`Network is unreachable` — the kernel is telling you directly that no route
+matches. The gateway itself is still reachable because it sits on a connected
+subnet, which is exactly why the symptom looks partial rather than total.
+
+Then restore and confirm:
+
+```bash
+./cleanup.sh
+./verify.sh
+```
+
+`cleanup.sh` re-adds the saved default route and clears the `10.99.0.0/24` test
+route from Step 3. `verify.sh` prints `PASS:` / `FAIL:` lines and exits non-zero
+if anything is still wrong.
+
+---
+
 ## What you learned
 - Use `ip route get` to ask the kernel “which route applies to this IP?”.
 - The longest-prefix-match rule.
 - How to add and remove a static route, and why metric matters.
+- Why a missing default route produces a *partial* outage, not a total one.
+
+---
+
+## Before you leave
+
+Run `./cleanup.sh` if you have not already, then work through `checklist.md` and tick every line.

@@ -7,6 +7,16 @@ In this lab you will take a single `/24` network and break it into four equal `/
 
 Run the Linux commands on https://killercoda.com/playgrounds/scenario/ubuntu
 
+**Files in this lab folder**
+
+| File | Use |
+|---|---|
+| `data/subnet-plan.csv` | the NetTech Solutions site/department plan you complete in Step 4 |
+| `answers.md` | the worked `/24` → four `/26` split and the completed plan, for self-checking |
+| `checklist.md` | tick-box list of everything you should be able to do by the end |
+
+Do the subnetting by hand and verify in the calculator **before** opening `answers.md`.
+
 ---
 
 ## Step 1 — Open the IP Calculator
@@ -67,9 +77,38 @@ Verify each subnet has:
 - A unique network and broadcast address
 - 62 usable host addresses
 
+Check your four rows against Part B of `answers.md`.
+
 ---
 
-## Step 4 — Assign an IP from subnet 2 to your interface
+## Step 4 — Complete the NetTech Solutions subnet plan
+
+Open `data/subnet-plan.csv`. It lists 12 departments across four NetTech Solutions
+sites, each with a host requirement and a parent `/24`. The last five columns are blank:
+
+```
+site,department,host_requirement,parent_network,cidr,network_address,first_host,last_host,broadcast
+Jurong HQ,Engineering,50,192.168.10.0/24,,,,,
+```
+
+For each row, work out and fill in:
+- **cidr** — the smallest prefix whose *usable* host count meets the requirement
+- **network_address**, **first_host**, **last_host**, **broadcast**
+
+Two rules make this quick:
+1. Allocate the **largest requirement first** within each site — this is VLSM, and it
+   stops a big department from being unable to fit in what is left over.
+2. The next subnet's network address = previous network address + block size.
+
+Use the TIS IP Calculator to confirm each row, then check your completed plan against
+Part C of `answers.md`.
+
+> Watch the boundary cases: a department needing 120 hosts does **not** fit in a `/26`
+> (62 usable) — it needs a `/25`. Always compare against *usable* hosts, not total.
+
+---
+
+## Step 5 — Assign an IP from subnet 2 to your interface
 
 Switch to the Killercoda terminal. We will give your interface a secondary IP that sits inside `192.168.10.64/26`.
 
@@ -81,7 +120,7 @@ The `label eth0:1` creates a virtual sub-interface so the new address does not r
 
 ---
 
-## Step 5 — Verify
+## Step 6 — Verify
 
 ```bash
 ip -4 addr show eth0
@@ -91,15 +130,18 @@ You should see `inet 192.168.10.65/26 ... eth0:1` in the output.
 
 ---
 
-## Step 6 — Clean up
+## Step 7 — Clean up
 
 ```bash
 ip addr del 192.168.10.65/26 dev eth0
 ```
+
+Finally, work through `checklist.md` and tick off each outcome.
 
 ---
 
 ## What you learned
 - How to verify subnet boundaries using the **TIS IP Calculator** at https://alfredang.github.io/ipcalculator/
 - How a `/24` divides into four `/26` networks with 62 usable hosts each.
+- How to size a subnet to a host requirement with VLSM across a multi-site plan.
 - How to assign and remove a CIDR-formatted IP on Linux.

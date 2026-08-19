@@ -130,10 +130,12 @@ prodoc.add_cover_page(doc,"LESSON PLAN",C.TITLE,C.VERSION.lstrip("v"),
                       course_code=C.COURSE_CODE)
 prodoc.add_version_control(doc,[
  ("1.0","2 July 2026","Initial release — Network+ (N10-009) 5-day lesson plan aligned to the 36 hands-on labs.",C.TRAINER),
- (C.VERSION.lstrip("v"),C.VERSION_DATE,
+ ("2.0","19 August 2026",
   "Regenerated against the v2 visual slide deck (five N10-009 domains, per-lab folders, TIS web "
   "ed-tools: IP Calculator, PCAP Analyzer, Cybersecurity Simulator, Regex Generator). Slide "
   "references updated to the new deck.",C.TRAINER),
+  ("2.1",C.VERSION_DATE,
+  "Added runnable lab assets to all 36 labs (80 setup/run/verify/cleanup scripts, 15 service config files, 17 CSV data sets, 36 checklists); new 'What Ships With Every Lab' slide; per-lab 'Files provided with this lab' sections. Slide references rebuilt against the 523-slide deck.",C.TRAINER),
 ])
 prodoc.add_toc(doc)
 

@@ -9,6 +9,19 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 - `netcat-openbsd`
 - `openssl`
 
+**Files in this lab folder:**
+
+| File | Use |
+|------|-----|
+| `run.sh` | runs the layered triage sequence (Steps 1–5) — or follow the steps by hand |
+| `troubleshooting-worksheet.md` | **the main deliverable** — the CompTIA 7-step form you complete in Step 7 |
+| `break.sh` | injects a fault so you meet the ticket cold — backs up the firewall rules first |
+| `cleanup.sh` | restores the **original** iptables rules from `/tmp/lab36-iptables.bak` |
+| `checklist.md` | tick-box list of everything you should be able to do by the end |
+
+This is the **capstone lab for Domain 5**. The commands are only half of it —
+the assessed output is the completed `troubleshooting-worksheet.md`.
+
 ---
 
 ## Step 1 — Install the tools
@@ -82,9 +95,70 @@ This isolates which phase is slow.
 4. Slow `time_namelookup` → DNS issue (Lab 30).
 5. Slow `time_starttransfer` → server-side processing.
 
+Steps 1–5 are scripted: run `./run.sh` to walk the whole triage in order.
+
+---
+
+## Step 7 — Capstone: work a real ticket with the CompTIA 7-step methodology
+
+Everything above told you *which commands* to run. This step is about the
+*discipline* of running them in the right order and writing down what you found —
+the CompTIA Network+ troubleshooting methodology:
+
+| # | Step |
+|---|------|
+| 1 | Identify the problem |
+| 2 | Establish a theory of probable cause |
+| 3 | Test the theory to determine the cause |
+| 4 | Establish a plan of action and identify potential effects |
+| 5 | Implement the solution or escalate |
+| 6 | Verify full system functionality and implement preventive measures |
+| 7 | Document findings, actions and outcomes |
+
+**Inject the fault** — do not read `break.sh` first, meet the ticket cold:
+
+```bash
+./break.sh
+```
+
+`break.sh` saves the current firewall rules to `/tmp/lab36-iptables.bak`
+**before** it changes anything, then adds a single rule. The ticket reads:
+
+> *"https://example.com is down — nobody in the office can reach it."*
+
+**Now open `troubleshooting-worksheet.md` and work all seven steps in order.**
+Fill in every box. The rule that matters most: write your theory down in Step 2
+*before* you test it in Step 3 — that is what separates methodical
+troubleshooting from guessing, and it is what the exam asks you to reproduce.
+
+Useful commands beyond this lab's three: `ping` and `mtr` (Lab 29), `dig`
+(Lab 30), `ip route` (Lab 34), and:
+
+```bash
+iptables -L OUTPUT -n --line-numbers
+```
+
+**Restore the box** once you have documented your findings:
+
+```bash
+./cleanup.sh
+```
+
+`cleanup.sh` removes the injected rule, restores the original filter table from
+the backup, and re-tests reachability so you can see the service come back.
+
 ---
 
 ## What you learned
 - A layered triage approach to “site is down” reports.
 - How to test each protocol layer in isolation with the right tool.
 - How to break a single curl request into its timing phases.
+- The CompTIA 7-step troubleshooting methodology, applied end to end to a live fault.
+- Why documenting the outcome (Step 7) is the step most often skipped and most often needed later.
+
+---
+
+## Before you leave
+
+Run `./cleanup.sh`, hand in your completed `troubleshooting-worksheet.md`, then
+work through `checklist.md` and tick every line.

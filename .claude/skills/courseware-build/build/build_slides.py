@@ -649,7 +649,10 @@ def _now():
     return len(prs.slides._sldIdLst)
 
 def _mark(kind, key):
-    SLIDE_INDEX[kind][str(key)] = _now()
+    # _mark is called immediately BEFORE the slide it names is created, so the
+    # slide's 1-based page number is the current count + 1. Recording _now()
+    # instead points every reference one slide early.
+    SLIDE_INDEX[kind][str(key)] = _now() + 1
 
 # ---------------- spec renderer ----------------
 def _norm_items(items):
@@ -762,8 +765,8 @@ def render_lab(a, t):
                troubleshoot=a.get("troubleshoot"))
 
 # ---------------- COVER + ADMIN ----------------
+_mark("admin", "cover")   # every _mark precedes the slide it names
 cover()
-_mark("admin", "cover")
 section("COURSE ADMINISTRATION", "Welcome & Housekeeping", "")
 tile_grid("Digital Attendance (Mandatory)", [
  ("Three times a day", "Take the AM, PM and Assessment digital attendance — mandatory for every WSQ-funded course."),
@@ -842,6 +845,14 @@ tile_grid("Your Lab Environment", [
  ("TIS Regex Generator", "Build the regular expressions used to search and filter log files. " + C.TOOLS["regex"]),
  ("No installs needed", "Everything is browser-based; packages are pulled with apt inside the playground VM.")],
  kicker="FREE TOOLS USED THROUGHOUT", cols=2, size=13, accent=TEAL)
+tile_grid("What Ships With Every Lab", [
+ ("README.md", "The lab itself — the concept, every command, the verify step and troubleshooting."),
+ ("checklist.md", "A tick-box list of what you must achieve — use it to self-check before moving on."),
+ ("setup.sh / run.sh", "The prep and the command sequence, so a long lab is not retyped by hand."),
+ ("verify.sh / cleanup.sh", "Prove the lab worked, then restore the box so the next lab starts clean."),
+ ("Config files", "Real service configs (dhcpd.conf, zone files, wg0.conf, rules) — copy them into place."),
+ ("data/*.csv", "Subnet plans, port lists, log samples and baseline sheets to work from and fill in.")],
+ kicker="EVERY LAB IS A FOLDER, NOT ONE FILE", cols=2, size=13, accent=VIOLET)
 _mark("admin", "briefing")
 tile_grid("Briefing for Assessment", [
  ("Do · Clear your desk", "Place phones and other materials under the table or on the floor."),
@@ -964,6 +975,28 @@ for s in prs.slides:
              any(("DOMAIN %s" % t["code"]) in joined and t["title"] in joined and t["subtitle"][:20] in joined
                  for t in C.TOPICS)
     _transition(s, "push" if is_div else "fade", speed="med" if is_div else "fast")
+
+# ---- self-check: every recorded slide index must actually BE that slide ----
+# A stale or off-by-one index silently corrupts every LP slide reference, so
+# verify each mark against the real deck before writing it out.
+_slides = list(prs.slides)
+def _slide_text(n):
+    if not (1 <= n <= len(_slides)):
+        return ""
+    return " ".join(sh.text_frame.text for sh in _slides[n-1].shapes if sh.has_text_frame)
+_bad = []
+for _num, _pg in SLIDE_INDEX["labs"].items():
+    if ("LAB %s" % _num) not in _slide_text(_pg):
+        _bad.append("lab %s -> slide %s" % (_num, _pg))
+for _num, _pg in SLIDE_INDEX["domains"].items():
+    _t = next((x for x in C.TOPICS if str(x["num"]) == str(_num)), None)
+    if _t and _t["title"] not in _slide_text(_pg):
+        _bad.append("domain %s -> slide %s" % (_num, _pg))
+if _bad:
+    raise SystemExit("slide_index is WRONG (the LP would carry bad references):\n  "
+                     + "\n  ".join(_bad))
+print("slide_index verified: %d labs + %d domains point at the right slides"
+      % (len(SLIDE_INDEX["labs"]), len(SLIDE_INDEX["domains"])))
 
 import json
 OUT = os.path.join(REPO, "courseware", "%s-%s.pptx" % (C.SHORT_TITLE, C.VERSION))

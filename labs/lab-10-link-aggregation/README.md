@@ -8,6 +8,18 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 - `ifenslave`
 - Kernel `bonding` module
 
+**Files shipped with this lab**
+
+| File | Use |
+|------|-----|
+| `setup.sh` | Runs Steps 1–2 only (install, load driver, create `bond0`) — it deliberately stops before Step 3 |
+| `verify.sh` | Objective `PASS`/`FAIL` check of the bond mode and slave state |
+| `cleanup.sh` | Reverses Step 5 — releases every slave, then deletes `bond0` |
+| `checklist.md` | Tick-box list of everything you must be able to show |
+
+`setup.sh` never enslaves a NIC for you: on the single-NIC playground that
+would cut your own shell off (see the warning in Step 3). You make that call.
+
 ---
 
 ## Step 1 — Install ifenslave and load the bonding driver
@@ -52,6 +64,13 @@ cat /proc/net/bonding/bond0
 
 You will see the LACP partner MAC, the aggregator ID, and per-slave link state.
 
+`verify.sh` parses the same file and asserts the bond is in 802.3ad mode with
+every slave reporting `MII Status: up`:
+
+```bash
+./verify.sh
+```
+
 ---
 
 ## Step 5 — Clean up
@@ -60,6 +79,14 @@ You will see the LACP partner MAC, the aggregator ID, and per-slave link state.
 ip link set eth0 nomaster
 ip link del bond0
 ```
+
+Or run the provided script, which releases every enslaved interface first:
+
+```bash
+./cleanup.sh
+```
+
+Finally, work through `checklist.md` and tick off each outcome.
 
 ---
 

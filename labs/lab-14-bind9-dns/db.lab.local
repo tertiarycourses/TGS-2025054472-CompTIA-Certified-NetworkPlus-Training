@@ -1,0 +1,18 @@
+; Lab 14 — forward zone file for lab.local
+; Install with:  cp db.lab.local /etc/bind/db.lab.local
+; Validate with: named-checkzone lab.local /etc/bind/db.lab.local
+;
+; Bump the serial every time you edit this file, or slaves will never
+; notice the change.
+$TTL 86400
+@   IN  SOA ns.lab.local. admin.lab.local. (
+            2026051001 ; serial
+            3600       ; refresh
+            1800       ; retry
+            604800     ; expire
+            86400 )    ; minimum
+@       IN  NS    ns.lab.local.
+ns      IN  A     127.0.0.1
+www     IN  A     10.0.0.10
+mail    IN  A     10.0.0.20
+@       IN  MX 10 mail.lab.local.

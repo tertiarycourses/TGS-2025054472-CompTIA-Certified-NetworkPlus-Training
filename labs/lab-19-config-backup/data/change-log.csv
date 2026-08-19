@@ -1,0 +1,17 @@
+date,change_id,device,description,requester,approver,rollback_plan
+2026-01-08,CHG-2026-0011,core-sw-01.nettech.local,Add VLAN 40 (IoT) and trunk it to dist-sw-01,j.tan@example.com,r.lim@example.com,git -C /etc revert <sha>; reload switch config from last commit
+2026-01-15,CHG-2026-0019,edge-rtr-01.nettech.local,Change default route next-hop to the new ISP handoff 203.0.113.1,m.chua@example.com,r.lim@example.com,Restore previous static route from commit tag pre-CHG-2026-0019
+2026-01-22,CHG-2026-0026,fw-perim-01.nettech.local,Permit TCP/443 from branch subnet 10.30.0.0/16 to srv-app-01,s.rahman@example.com,r.lim@example.com,Delete the added rule; firewall keeps a pre-change config snapshot
+2026-02-03,CHG-2026-0034,srv-dhcp-01.nettech.local,Shorten DHCP lease on scope 10.20.1.0/24 from 24h to 8h,j.tan@example.com,a.kumar@example.com,Restore dhcpd.conf from git and systemctl restart isc-dhcp-server
+2026-02-11,CHG-2026-0041,srv-dns-01.nettech.local,Add A record intranet.nettech.local -> 10.20.3.41 and bump zone serial,p.wong@example.com,a.kumar@example.com,git checkout HEAD~1 -- bind/db.nettech.local; rndc reload
+2026-02-19,CHG-2026-0048,dist-sw-01.nettech.local,Enable root guard on GigabitEthernet0/3 facing the contractor rack,m.chua@example.com,r.lim@example.com,no shutdown and remove spanning-tree guard root on the port
+2026-02-26,CHG-2026-0055,wlc-01.nettech.local,Migrate corporate SSID from WPA2-PSK to WPA3-Enterprise,s.rahman@example.com,r.lim@example.com,Re-apply the WPA2-PSK WLAN profile exported before the change
+2026-03-04,CHG-2026-0063,acc-sw-l2-01.nettech.local,Enable port security max 2 MACs on all access ports,j.tan@example.com,a.kumar@example.com,Remove switchport port-security; clear err-disabled ports
+2026-03-11,CHG-2026-0070,core-sw-01.nettech.local,Replace failed chassis fan 2 during the Sunday window,f.ismail@example.com,r.lim@example.com,Hardware change - refit the original fan; no config to roll back
+2026-03-18,CHG-2026-0078,edge-rtr-02.nettech.local,Increase OSPF hello interval on Gi0/1 from 10s to 30s,m.chua@example.com,r.lim@example.com,git -C /etc revert <sha>; clear ip ospf process on both neighbours
+2026-03-25,CHG-2026-0085,srv-ntp-01.nettech.local,Add time.cloudflare.com as a secondary upstream NTP source,p.wong@example.com,a.kumar@example.com,Remove the server line from chrony.conf and restart chrony
+2026-04-01,CHG-2026-0092,fw-perim-01.nettech.local,Block outbound TCP/3389 from all user VLANs,s.rahman@example.com,r.lim@example.com,Delete the deny rule; pre-change ruleset is committed in git
+2026-04-08,CHG-2026-0099,nas-backup-01.nettech.local,Move nightly-full backup window from 01:00 to 23:00,f.ismail@example.com,a.kumar@example.com,Restore the previous cron schedule from git
+2026-04-15,CHG-2026-0107,core-sw-02.nettech.local,Firmware upgrade to 17.09.04a during the maintenance window,j.tan@example.com,r.lim@example.com,Boot the previous image still on flash and reload
+2026-04-22,CHG-2026-0114,srv-app-01.nettech.local,Harden sshd - disable password auth leaving publickey only,p.wong@example.com,a.kumar@example.com,git checkout HEAD~1 -- ssh/sshd_config; systemctl reload ssh
+2026-04-29,CHG-2026-0121,edge-rtr-01.nettech.local,Add BGP prefix-list to filter routes longer than /24 from the ISP,m.chua@example.com,r.lim@example.com,Remove the prefix-list and clear the BGP session soft

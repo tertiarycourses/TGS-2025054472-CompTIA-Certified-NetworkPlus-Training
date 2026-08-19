@@ -52,6 +52,20 @@ def note(t): B.append(("note",t))
 def rule(): B.append(("rule",))
 def figure(path, caption): B.append(("figure", path, caption))
 
+def lab_files(num):
+    """Files the lab folder ships besides its README (scripts, configs, data, checklist)."""
+    fold=lab_folder(num)
+    base=os.path.join(REPO,fold)
+    if not os.path.isdir(base): return []
+    out=[]
+    for x in sorted(glob.glob(os.path.join(base,"*"))):
+        if os.path.isfile(x) and os.path.basename(x)!="README.md":
+            out.append(os.path.basename(x))
+    for x in sorted(glob.glob(os.path.join(base,"*","*"))):
+        if os.path.isfile(x):
+            out.append(os.path.relpath(x,base))
+    return out
+
 FIGDIR=os.path.join(REPO,"courseware","assets","figures")
 def lab_figure(num):
     """Repo-relative path of the lab's process-map figure, or None."""
@@ -87,6 +101,21 @@ p("Open the Killercoda Ubuntu Playground and wait for the terminal prompt. The V
   "if a lab leaves the network in a broken state, simply close the session and start a fresh one. "
   "Confirm the basics before you begin:")
 code("id                     # you are root (or use sudo)\nip addr show           # the primary interface and its IP\napt update             # refresh package lists\nping -c 2 8.8.8.8      # outbound connectivity")
+h3("What ships with every lab")
+p("Each lab is a folder, not a single file. Alongside the lab README you will find the "
+  "supporting files it needs, so you never retype a long configuration by hand. Every "
+  "command is still printed in the steps, so you can always work through a lab manually.")
+bullets([
+ "README.md — the lab itself: the concept, every command, the verify step and troubleshooting.",
+ "checklist.md — a tick-box list of what you must achieve; use it to self-check before moving on.",
+ "setup.sh / run.sh — environment prep and the command sequence for the longer labs.",
+ "verify.sh — an objective PASS/FAIL check that the lab actually worked.",
+ "cleanup.sh — restores the machine so the next lab starts from a clean state.",
+ "Service configs (for example dhcpd.conf, zone files, wg0.conf, rule files) — copy them into place.",
+ "data/*.csv — subnet plans, port lists, log samples and baseline sheets to work from and fill in.",
+])
+p("Run a script with ./setup.sh from inside the lab folder. If a script will not execute, "
+  "make it executable first with chmod +x *.sh.")
 h3("Conventions used in every lab")
 bullets([
  "Commands are run in the Killercoda terminal; a leading sudo is shown where root is required.",
@@ -108,6 +137,12 @@ for t in C.TOPICS:
         p(f"Goal: {a['desc']}")
         h3("What you'll build")
         p(a["build"]+f"   (Tools: {a['services']}.)")
+        _lf=lab_files(a["num"])
+        if _lf:
+            h3("Files provided with this lab")
+            p("The lab folder ships these files so you do not have to retype long "
+              "configurations. Every command is still shown in the steps below.")
+            bullets(["`%s`"%x for x in _lf])
         fig=lab_figure(a["num"])
         if fig:
             figure(fig, f"Figure {a['num']} — how Lab {a['num']} runs: the workflow you will follow.")
@@ -235,10 +270,12 @@ prodoc.add_cover_page(doc,"LEARNER GUIDE",C.TITLE,C.VERSION.lstrip("v"),
                       course_code=C.COURSE_CODE)
 prodoc.add_version_control(doc,[
  ("1.0","2 July 2026","Initial release — CompTIA Network+ (N10-009) Learner Guide covering all 36 labs.",C.TRAINER),
- (C.VERSION.lstrip("v"),C.VERSION_DATE,
+ ("2.0","19 August 2026",
   "Regenerated from the single-source pipeline: per-lab folders, per-lab troubleshooting tables, TIS "
   "web ed-tools (IP Calculator, PCAP Analyzer, Cybersecurity Simulator, Regex Generator) woven into "
   "the labs, and new Exam Focus quick references (ports, subnetting, methodology).",C.TRAINER),
+  ("2.1",C.VERSION_DATE,
+  "Added runnable lab assets to all 36 labs (80 setup/run/verify/cleanup scripts, 15 service config files, 17 CSV data sets, 36 checklists); new 'What Ships With Every Lab' slide; per-lab 'Files provided with this lab' sections. Slide references rebuilt against the 523-slide deck.",C.TRAINER),
 ])
 prodoc.add_toc(doc)
 

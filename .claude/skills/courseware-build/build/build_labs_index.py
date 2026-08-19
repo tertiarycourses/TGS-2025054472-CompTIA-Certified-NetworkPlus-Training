@@ -37,11 +37,16 @@ out=[f"# {C.TITLE} — Lab Index","",
 for t in C.TOPICS:
     out.append(f"## Domain {t['code']} — {t['title']}  ({t['weighting']})")
     out.append("")
-    out.append("| # | Lab | Tools |")
-    out.append("|---|-----|-------|")
+    out.append("| # | Lab | Tools | Files in the lab folder |")
+    out.append("|---|-----|-------|-------------------------|")
     for a in [x for x in ACT if x["topic"]==t["num"]]:
         f=folder(a["num"])
-        out.append(f"| {a['num']} | [{a['title']}]({f}/README.md) | {a['services']} |")
+        extra=sorted(os.path.basename(x) for x in glob.glob(os.path.join(REPO,"labs",f,"*"))
+                     if os.path.basename(x)!="README.md" and os.path.isfile(x))
+        sub=sorted(os.path.relpath(x,os.path.join(REPO,"labs",f))
+                   for x in glob.glob(os.path.join(REPO,"labs",f,"*","*")) if os.path.isfile(x))
+        files=", ".join("`%s`"%x for x in extra+sub) or "—"
+        out.append(f"| {a['num']} | [{a['title']}]({f}/README.md) | {a['services']} | {files} |")
     out.append("")
 out+=["---","",
  f"© 2026 {C.ORG} ({C.UEN}). Course registration: {C.REGISTER_URL}",""]

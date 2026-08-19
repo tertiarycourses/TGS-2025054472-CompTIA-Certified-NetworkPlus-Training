@@ -7,6 +7,16 @@ The Killercoda playground has no wireless radio, so this lab uses a mix of theor
 - On Windows laptop: **WiFi Analyzer** (free from Microsoft Store) or **Acrylic Wi-Fi Home** (free)
 - On macOS: built-in **Wireless Diagnostics** (Option-click the Wi-Fi icon)
 
+**Files shipped with this lab**
+
+| File | Use |
+|------|-----|
+| `data/site-survey.csv` | Survey worksheet you fill in during Step 2 — example rows plus blank rows to extend |
+| `checklist.md` | Tick-box list of everything you must be able to show |
+
+This lab ships **no setup scripts**: it runs on your own laptop's wireless
+adapter, not on the Linux playground.
+
 ---
 
 ## Step 1 — List supported PHYs (on a real wireless device)
@@ -26,6 +36,19 @@ iw dev wlan0 scan | grep -E "SSID|freq|signal|RSN|WPA"
 ```
 
 For each AP record the SSID, channel, signal (dBm) and security (WPA2-PSK / WPA3-SAE).
+
+Record them in the worksheet shipped with this lab — open
+`data/site-survey.csv` in a spreadsheet or a text editor. It already contains
+ten example rows showing the format; delete none of them, just add one row per
+AP your own scan finds:
+
+```
+ssid,bssid,channel,band,rssi_dbm,security,notes
+NETTECH-STAFF,02:1a:2b:00:10:01,1,2.4 GHz,-42,WPA3-SAE,...
+```
+
+Windows and macOS users: read the same columns off WiFi Analyzer / Wireless
+Diagnostics and fill in the worksheet by hand.
 
 ---
 
@@ -55,6 +78,12 @@ For each AP record the SSID, channel, signal (dBm) and security (WPA2-PSK / WPA3
 1. Why are 1/6/11 the only non-overlapping 2.4 GHz channels?
 2. What does DFS stand for and why does it cause brief outages?
 3. Why does Wi-Fi 6E require WPA3?
+
+Use your completed `data/site-survey.csv` to answer a fourth question: which
+two APs in your survey are on overlapping 2.4 GHz channels, and which AP is the
+weakest-secured?
+
+Finally, work through `checklist.md` and tick off each outcome.
 
 ---
 

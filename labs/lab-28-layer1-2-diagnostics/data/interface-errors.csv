@@ -1,0 +1,13 @@
+interface,link_state,speed_mbps,duplex,autoneg,rx_errors,tx_errors,crc_errors,collisions,likely_cause
+eth0,UP,1000,full,on,0,0,0,0,healthy - no action
+eth1,UP,100,half,off,18422,9310,15877,24019,duplex mismatch - switch port is full autoneg is off
+eth2,UP,1000,full,on,42310,0,42188,0,bad cable or connector - CRC errors on receive only
+eth3,LOWERLAYERDOWN,0,unknown,on,0,0,0,0,cable unplugged - no carrier
+eth4,UP,1000,full,on,0,31877,0,0,transmit errors - failing NIC or saturated switch port
+eth5,UP,10,full,on,0,0,0,0,autonegotiated down to 10 Mbps - damaged pair in the cable
+eth6,DOWN,0,unknown,on,0,0,0,0,administratively down - ip link set eth6 up
+eth7,UP,1000,full,on,7,3,0,0,within noise - monitor only no action
+eth8,UP,1000,full,on,0,0,0,0,healthy - baseline for comparison
+eth9,UP,100,full,off,2104,0,2098,0,speed hard-set to 100 on one side only - re-enable autoneg
+bond0,UP,2000,full,on,0,0,0,0,LACP bundle of eth0 and eth8 - healthy
+wlan0,UP,54,half,on,9412,1203,0,0,wireless retries not a cabling fault - check RSSI and channel

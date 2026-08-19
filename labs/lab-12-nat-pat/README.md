@@ -7,6 +7,18 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 **Required software (free, installed via apt):**
 - `iptables` (usually pre-installed)
 
+**Files shipped with this lab**
+
+| File | Use |
+|------|-----|
+| `setup.sh` | Runs Steps 1–3 (namespace, forwarding, MASQUERADE rule) |
+| `verify.sh` | Objective `PASS`/`FAIL` check, including the conntrack translation |
+| `cleanup.sh` | Reverses Step 6 — removes the exact NAT rule this lab added, then the namespace |
+| `checklist.md` | Tick-box list of everything you must be able to show |
+
+Type the steps by hand the first time. `./setup.sh` runs the identical commands
+if you need to rebuild after a playground reset.
+
 ---
 
 ## Step 1 — Re-create the namespace from Lab 7 (or 8)
@@ -63,15 +75,36 @@ conntrack -L | head
 
 You will see entries like `tcp ... src=10.1.1.2 ... [SRC=<public-ip>]` showing the translation.
 
+`verify.sh` automates the whole chain of checks — addressing, forwarding, the
+rule itself, the ping, and this conntrack entry:
+
+```bash
+./verify.sh
+```
+
 ---
 
 ## Step 6 — Clean up
+
+**Do not skip this.** A leftover MASQUERADE rule silently NATs traffic in the
+labs that follow.
 
 ```bash
 iptables -t nat -F POSTROUTING
 ip netns del a
 ip link del h-a 2>/dev/null
 ```
+
+Or run the provided script. It deletes the exact rule this lab added (rather
+than flushing the whole chain), removes the namespace, prints the resulting
+`POSTROUTING` chain so you can see it is clean, and drops stale conntrack
+entries for 10.1.1.0/24:
+
+```bash
+./cleanup.sh
+```
+
+Finally, work through `checklist.md` and tick off each outcome.
 
 ---
 

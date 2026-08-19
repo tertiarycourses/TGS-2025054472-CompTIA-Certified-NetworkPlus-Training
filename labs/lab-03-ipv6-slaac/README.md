@@ -7,6 +7,16 @@ IPv6 is on the N10-009 exam blueprint. In this lab you will use the **TIS IP Cal
 
 Run the Linux commands on https://killercoda.com/playgrounds/scenario/ubuntu
 
+**Files in this lab folder**
+
+| File | Use |
+|---|---|
+| `answers.md` | worked address-shortening examples and the full EUI-64 derivation |
+| `verify.sh` | checks the link-local and global addresses are present and pingable |
+| `checklist.md` | tick-box list of everything you should be able to do by the end |
+
+Shorten the addresses by hand before opening `answers.md`.
+
 ---
 
 ## Step 1 — Plan the IPv6 prefix in the calculator
@@ -40,6 +50,18 @@ ip -6 addr show eth0
 ```
 
 You will see at least one address that begins with `fe80::`. That is the **link-local** address. It is valid only on the local link and is generated from the interface MAC (modified EUI-64) or a random token.
+
+Notice the address is written in shortened form. Part A and B of `answers.md` work
+through the two shortening rules on six examples — including the trap where `::` cannot
+be used because there are two separate runs of zeros.
+
+Part D of `answers.md` walks the modified EUI-64 derivation end to end: split the MAC,
+insert `ff:fe`, flip the Universal/Local bit, prepend `fe80::`. Try it on the MAC from
+`ip link show eth0` before reading the answer.
+
+> If your `fe80::` address has no `ff:fe` in the middle, the kernel generated a
+> stable-privacy identifier (RFC 7217) instead of an EUI-64 one. That is normal on
+> modern Linux and not a fault.
 
 ---
 
@@ -85,6 +107,15 @@ ping6 -c2 2001:db8::10
 
 This should succeed because the address is now bound to your interface.
 
+Confirm everything at once — **run this before the Step 7 cleanup**:
+
+```bash
+./verify.sh
+```
+
+It prints a `PASS:`/`FAIL:` line for the link-local address, the global address, and the
+ping, and exits non-zero if any check fails.
+
 ---
 
 ## Step 7 — Clean up
@@ -92,6 +123,8 @@ This should succeed because the address is now bound to your interface.
 ```bash
 ip -6 addr del 2001:db8::10/64 dev eth0
 ```
+
+Finally, work through `checklist.md` and tick off each outcome.
 
 ---
 

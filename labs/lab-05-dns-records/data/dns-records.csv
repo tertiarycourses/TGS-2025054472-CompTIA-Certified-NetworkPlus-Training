@@ -1,0 +1,16 @@
+record_type,example_name,example_value,purpose
+A,www.nettech.local,192.168.50.10,Maps a hostname to an IPv4 address
+AAAA,www.nettech.local,2001:db8:50::10,Maps a hostname to an IPv6 address
+CNAME,shop.nettech.local,www.nettech.local,Alias pointing one name at another name rather than at an IP
+MX,nettech.local,10 mail1.nettech.local,Names the mail exchanger for a domain; the number is priority and lower wins
+NS,nettech.local,ns1.nettech.local,Delegates the zone to an authoritative nameserver
+SOA,nettech.local,ns1.nettech.local. admin.nettech.local. 2025081901,"Start of Authority — primary NS, admin mailbox, serial and refresh timers"
+PTR,10.50.168.192.in-addr.arpa,www.nettech.local,Reverse lookup mapping an IP back to a hostname
+TXT,nettech.local,v=spf1 mx -all,"Free-form text used for SPF, DKIM, DMARC and domain-ownership proof"
+SRV,_sip._tcp.nettech.local,10 60 5060 sip1.nettech.local,"Locates a service by protocol and port — priority, weight, port, target"
+SRV,_xmpp-server._tcp.nettech.local,5 0 5269 xmpp.nettech.local,Locates the XMPP server for the domain
+A,mail1.nettech.local,192.168.50.25,Address record for the mail exchanger named by the MX record
+A,ns1.nettech.local,192.168.50.53,Address record for the primary authoritative nameserver
+AAAA,ns1.nettech.local,2001:db8:50::53,IPv6 address record for the primary nameserver
+CNAME,ftp.nettech.local,files.nettech.local,Alias so the FTP name can be re-pointed without touching every client
+TXT,_dmarc.nettech.local,v=DMARC1; p=quarantine,DMARC policy telling receivers how to treat failing mail

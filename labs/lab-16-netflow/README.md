@@ -8,6 +8,16 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 - `nfdump`
 - `fprobe`
 
+**Files in this lab folder:**
+
+| File | What it is |
+|---|---|
+| `setup.sh` | runs Steps 1–3: install, start `nfcapd`, start `fprobe` (idempotent) |
+| `run.sh` | runs Steps 4–5: generate traffic, wait, produce the three `nfdump` reports |
+| `verify.sh` | objective pass/fail check — `nfdump` must report flows |
+| `cleanup.sh` | Step 6: stops both processes and removes `/tmp/flows` |
+| `checklist.md` | tick-list of everything you should have done |
+
 ---
 
 ## Step 1 — Install the tools
@@ -39,6 +49,8 @@ fprobe -i eth0 127.0.0.1:9995
 
 `fprobe` reads packets from eth0 and emits NetFlow v5 records.
 
+Steps 1–3 are also in `./setup.sh` — run it instead of typing them, or type them and skip the script. It runs exactly the commands above.
+
 ---
 
 ## Step 4 — Generate traffic
@@ -61,6 +73,8 @@ nfdump -R /tmp/flows -s dstport
 
 `-s srcip` summarises top talker IPs; `-s dstport` shows the busiest destination ports.
 
+`./run.sh` performs Steps 4–5 end to end (traffic, the 60-second wait, all three reports).
+
 ---
 
 ## Step 6 — Clean up
@@ -69,6 +83,18 @@ nfdump -R /tmp/flows -s dstport
 pkill fprobe
 pkill nfcapd
 ```
+
+`./cleanup.sh` does this and also removes `/tmp/flows`, so the next lab starts clean.
+
+---
+
+## Test it
+
+```bash
+./verify.sh
+```
+
+Expect `ALL CHECKS PASSED` — `nfcapd.*` files exist in `/tmp/flows`, `nfdump` reports at least one flow record, and `nfdump -s srcip` produces a top-talker report. Run it **before** `./cleanup.sh`. Work through `checklist.md` as you go.
 
 ---
 

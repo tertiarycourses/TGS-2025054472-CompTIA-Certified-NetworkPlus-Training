@@ -1,0 +1,17 @@
+host,port,state,service,version,risk,action
+127.0.0.1,22,open,ssh,OpenSSH 8.9p1 Ubuntu 3ubuntu0.6,Low,Keep - required for administration; harden per Lab 23
+127.0.0.1,53,open,domain,dnsmasq 2.86,Medium,Keep but bind to the internal interface only
+127.0.0.1,80,open,http,nginx 1.18.0,Medium,Keep only as a 301 redirect to 443
+127.0.0.1,443,open,ssl/http,nginx 1.18.0 (TLS 1.3),Low,Keep - the TLS site built in Lab 22
+127.0.0.1,3306,open,mysql,MySQL 8.0.36-0ubuntu0.22.04.1,High,Restrict to 10.0.0.0/8 with the Lab 27 ACL
+127.0.0.1,111,open,rpcbind,2-4 (RPC #100000),High,Disable - no NFS on this host
+127.0.0.1,631,open,ipp,CUPS 2.4,Medium,Disable - a server does not need a print spooler
+127.0.0.1,25,open,smtp,Postfix smtpd,Medium,Bind to loopback only - local mail delivery does not need a public listener
+127.0.0.1,161,open,snmp,net-snmp 5.9.1,High,Move to SNMPv3 and restrict to the NMS subnet (Lab 15)
+127.0.0.1,2049,filtered,nfs,unknown,Medium,Confirm filtered by the host firewall and leave disabled
+127.0.0.1,5432,open,postgresql,PostgreSQL 14.11,High,Bind to 127.0.0.1 - no remote database clients on this host
+127.0.0.1,8080,open,http-proxy,Apache Tomcat 9.0.58,High,Disable - legacy application server left from a previous project
+127.0.0.1,23,closed,telnet,n/a,Informational,No action - correctly closed; cleartext protocol must stay off
+127.0.0.1,21,closed,ftp,n/a,Informational,No action - correctly closed; use SFTP instead
+127.0.0.1,11211,open,memcached,memcached 1.6.14,High,Disable or bind to loopback - unauthenticated and amplification-capable
+127.0.0.1,6379,open,redis,Redis 6.0.16,High,Disable - unauthenticated by default and remotely exploitable

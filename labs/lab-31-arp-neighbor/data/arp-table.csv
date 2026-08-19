@@ -1,0 +1,14 @@
+ip_address,mac_address,interface,state,notes
+10.20.10.1,02:42:ac:11:00:01,eth0,REACHABLE,default gateway - recently confirmed
+10.20.10.14,02:42:ac:11:00:0e,eth0,STALE,known but not confirmed recently - normal
+10.20.10.15,02:42:ac:11:00:0f,eth0,REACHABLE,file server nas01.nettech.local
+10.20.10.22,02:42:ac:11:00:16,eth0,DELAY,probe in flight - transient state
+10.20.10.31,,eth0,INCOMPLETE,no ARP reply - host off or wrong VLAN
+10.20.10.37,02:42:ac:11:00:0f,eth0,REACHABLE,DUPLICATE MAC - same lladdr as 10.20.10.15 investigate
+10.20.10.44,,eth0,FAILED,ARP resolution gave up - check cable and switch port
+10.20.10.50,02:42:ac:11:00:32,eth0,REACHABLE,printer prt01.nettech.local
+10.20.10.61,02:42:ac:11:00:3d,eth0,STALE,workstation ws061.nettech.local
+10.0.0.99,de:ad:be:ef:00:01,eth0,PERMANENT,static entry added in Step 4 - never ages out
+fe80::42:acff:fe11:1,02:42:ac:11:00:01,eth0,REACHABLE,IPv6 link-local of the gateway via NDP
+fe80::42:acff:fe11:f,02:42:ac:11:00:0f,eth0,STALE,IPv6 link-local of nas01
+ff02::1,,eth0,NOARP,all-nodes multicast - never has a neighbour entry

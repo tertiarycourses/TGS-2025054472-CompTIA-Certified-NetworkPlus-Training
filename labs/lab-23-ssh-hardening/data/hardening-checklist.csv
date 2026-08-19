@@ -1,0 +1,22 @@
+control,setting,default_value,hardened_value,rationale
+Authentication,PasswordAuthentication,yes,no,Removes password guessing and credential stuffing as an attack path entirely
+Privileged access,PermitRootLogin,prohibit-password,prohibit-password,root may connect but only with a key - never with a password
+Brute force,MaxAuthTries,6,3,Drops the connection after three failures so each attempt costs the attacker a new handshake
+Empty credentials,PermitEmptyPasswords,no,no,An account with no password must never be reachable over the network
+Keyboard interactive,KbdInteractiveAuthentication,yes,no,Closes the PAM side door that can still prompt for a password
+Challenge response,ChallengeResponseAuthentication,yes,no,Same side door under its older directive name
+Exposure,Port,22,2222,Security through obscurity only - it does not stop a targeted attacker but removes most scan noise
+Account scope,AllowUsers,unset (all users),admin,Explicit allow-list means a new system account is not automatically remotely reachable
+Protocol,Protocol,2,2,SSH-1 is cryptographically broken and must never be enabled
+Host key algorithm,HostKeyAlgorithms,rsa and ed25519,ssh-ed25519,Ed25519 is faster and smaller than RSA-2048 at equivalent strength
+Tunnelling,AllowTcpForwarding,yes,no,Stops a compromised account from pivoting deeper into the network
+Display forwarding,X11Forwarding,no,no,A server has no display - forwarding it only adds attack surface
+Session hygiene,ClientAliveInterval,0 (never),300,Idle sessions are reaped rather than left open on an unattended desktop
+Session hygiene,ClientAliveCountMax,3,2,Two missed probes is enough to conclude the client is gone
+Connection setup,LoginGraceTime,120,30,Shrinks the window in which unauthenticated connections can be held open
+Rate limiting,MaxStartups,10:30:100,10:30:60,Caps concurrent unauthenticated connections during a flood
+Logging,LogLevel,INFO,VERBOSE,VERBOSE records the key fingerprint used - essential for incident response
+Brute force response,fail2ban,not installed,installed and enabled,Automatically bans source IPs that repeatedly fail authentication
+Key hygiene,authorized_keys permissions,644,600,sshd silently ignores an authorized_keys file that is group or world writable
+Key hygiene,.ssh directory permissions,755,700,Same rule applies to the directory holding the key material
+Change management,sshd -t before reload,not enforced,mandatory,A syntax error in sshd_config can lock every administrator out of the host

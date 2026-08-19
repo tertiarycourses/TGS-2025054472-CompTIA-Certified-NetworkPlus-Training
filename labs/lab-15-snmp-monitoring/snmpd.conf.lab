@@ -1,0 +1,18 @@
+# Lab 15 — SNMP agent configuration fragment
+#
+# These are exactly the two directives README Step 2 applies to
+# /etc/snmp/snmpd.conf. Append them (or let setup.sh do it):
+#
+#     cat snmpd.conf.lab >> /etc/snmp/snmpd.conf
+#     systemctl restart snmpd
+#
+# NOTE: setup.sh instead rewrites the existing agentaddress line with sed,
+# which is what the README shows. Use this file when you would rather see
+# the finished directives in one place.
+
+# Listen for SNMP polls on loopback only, UDP/161.
+agentaddress udp:127.0.0.1:161
+
+# Read-only community string "public", restricted to the loopback manager.
+# v2c community strings travel in cleartext — use SNMPv3 in production.
+rocommunity public 127.0.0.1

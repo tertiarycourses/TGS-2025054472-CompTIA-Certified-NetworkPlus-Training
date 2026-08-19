@@ -1,0 +1,13 @@
+vlan_id,name,subnet,gateway,ports_or_purpose,port_mode
+10,STAFF,192.168.10.0/24,192.168.10.1,Built in Step 2 as eth0.10 - staff workstations,tagged
+20,VOICE,192.168.20.0/24,192.168.20.1,Built in Step 2 as eth0.20 - IP phones,tagged
+1,DEFAULT,192.168.1.0/24,192.168.1.1,Native/untagged VLAN on the trunk - leave unused,untagged
+30,GUEST,192.168.30.0/24,192.168.30.1,Guest Wi-Fi SSID - internet only no LAN access,tagged
+40,SERVERS,192.168.40.0/24,192.168.40.1,Rack A file and print servers,tagged
+50,PRINTERS,192.168.50.0/24,192.168.50.1,Office MFPs on access ports Gi1/0/13-18,untagged
+60,CCTV,192.168.60.0/24,192.168.60.1,PoE cameras on access ports Gi1/0/19-24,untagged
+70,MGMT,10.99.99.0/24,10.99.99.1,Switch and AP management SVIs - restricted,tagged
+80,IOT,192.168.80.0/24,192.168.80.1,Building sensors and HVAC controllers,tagged
+90,LAB,192.168.90.0/24,192.168.90.1,Training lab bench - isolated from production,tagged
+100,DMZ,172.16.100.0/24,172.16.100.1,Public-facing web servers behind the firewall,tagged
+999,BLACKHOLE,unused,none,Parking VLAN for disabled/unpatched access ports,untagged

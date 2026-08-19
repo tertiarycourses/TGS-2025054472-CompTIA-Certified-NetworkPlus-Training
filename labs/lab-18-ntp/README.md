@@ -7,6 +7,16 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 **Required software (free, installed via apt):**
 - `chrony`
 
+**Files in this lab folder:**
+
+| File | What it is |
+|---|---|
+| `chrony.conf.lab` | the server line Step 4 appends to `/etc/chrony/chrony.conf` |
+| `verify.sh` | objective pass/fail check — `chronyc sources` must show a synced source |
+| `checklist.md` | tick-list of everything you should have done |
+
+This lab changes no routing or interface state, so there is nothing to clean up.
+
 ---
 
 ## Step 1 — Install chrony
@@ -51,6 +61,14 @@ chronyc sources -v
 
 `iburst` sends a quick burst of packets at start so the source is selected faster.
 
+The same line ships as `chrony.conf.lab` in this folder, with production notes in its comments:
+
+```
+server time.cloudflare.com iburst
+```
+
+so `cat chrony.conf.lab >> /etc/chrony/chrony.conf` is equivalent to the `echo` above.
+
 ---
 
 ## Step 5 — Force an immediate sync
@@ -58,6 +76,16 @@ chronyc sources -v
 ```bash
 chronyc -a makestep
 ```
+
+---
+
+## Test it
+
+```bash
+./verify.sh
+```
+
+Expect `ALL CHECKS PASSED` — `chronyd` is running, `chronyc sources -v` shows a `^*` selected source, `chronyc tracking` reports a usable stratum, and the Step 4 server line is present in `/etc/chrony/chrony.conf`. If the `^*` check fails, wait about a minute for chrony to settle and re-run. Work through `checklist.md` as you go.
 
 ---
 

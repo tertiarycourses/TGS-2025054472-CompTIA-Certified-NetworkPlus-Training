@@ -1,0 +1,21 @@
+hostname,mgmt_ip,device_type,location_rack,snmp_community,snmp_version,eol_date
+core-sw-01.nettech.local,10.20.0.11,core switch,DC1 / Rack A03,public,v2c,2028-03-31
+core-sw-02.nettech.local,10.20.0.12,core switch,DC1 / Rack A04,public,v2c,2028-03-31
+dist-sw-01.nettech.local,10.20.0.21,distribution switch,DC1 / Rack B01,public,v2c,2027-09-30
+dist-sw-02.nettech.local,10.20.0.22,distribution switch,DC1 / Rack B02,public,v2c,2027-09-30
+acc-sw-l1-01.nettech.local,10.20.1.31,access switch,Level 1 / IDF-1A,netmon-ro,v2c,2026-12-31
+acc-sw-l2-01.nettech.local,10.20.1.32,access switch,Level 2 / IDF-2A,netmon-ro,v2c,2026-12-31
+acc-sw-l3-01.nettech.local,10.20.1.33,access switch,Level 3 / IDF-3A,netmon-ro,v2c,2026-12-31
+edge-rtr-01.nettech.local,10.20.0.1,edge router,DC1 / Rack A01,snmpv3-noc,v3,2029-06-30
+edge-rtr-02.nettech.local,10.20.0.2,edge router,DC1 / Rack A02,snmpv3-noc,v3,2029-06-30
+fw-perim-01.nettech.local,10.20.0.5,firewall,DC1 / Rack A01,snmpv3-noc,v3,2027-06-30
+wlc-01.nettech.local,10.20.2.10,wireless controller,DC1 / Rack C02,netmon-ro,v2c,2027-01-31
+ap-l1-014.nettech.local,10.20.2.114,wireless AP,Level 1 / Ceiling N14,netmon-ro,v2c,2026-08-31
+ap-l2-021.nettech.local,10.20.2.121,wireless AP,Level 2 / Ceiling N21,netmon-ro,v2c,2026-08-31
+srv-esx-01.nettech.local,10.20.3.41,hypervisor host,DC1 / Rack D01,snmpv3-noc,v3,2030-01-31
+srv-esx-02.nettech.local,10.20.3.42,hypervisor host,DC1 / Rack D02,snmpv3-noc,v3,2030-01-31
+nas-backup-01.nettech.local,10.20.3.60,storage array,DC1 / Rack D04,netmon-ro,v2c,2028-11-30
+ups-dc1-01.nettech.local,10.20.4.5,UPS,DC1 / Rack A00,public,v1,2026-05-31
+pdu-dc1-a03.nettech.local,10.20.4.13,PDU,DC1 / Rack A03,public,v1,2027-04-30
+printer-l2-01.nettech.local,10.20.5.80,printer,Level 2 / Copy Room,public,v1,2026-02-28
+ipcam-lobby-01.nettech.local,10.20.6.101,IP camera,Level 1 / Lobby,public,v2c,2026-10-31

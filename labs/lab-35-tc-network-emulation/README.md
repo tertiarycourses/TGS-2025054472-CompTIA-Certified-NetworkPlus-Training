@@ -8,6 +8,26 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 - `iproute2` (`tc` lives here)
 - Kernel module `sch_netem`
 
+**Files in this lab folder:**
+
+| File | Use |
+|------|-----|
+| `setup.sh` | checks `tc`, loads `sch_netem`, installs `iperf3`, clears any leftover qdisc |
+| `run.sh` | runs the shaping sequence (Steps 1–6) — or follow the steps by hand |
+| `cleanup.sh` | **mandatory** — deletes the `eth0` root qdisc and stops the iperf3 server |
+| `checklist.md` | tick-box list of everything you should be able to do by the end |
+
+> ⚠️ **You MUST run `./cleanup.sh` before leaving this lab.** A qdisc left on
+> `eth0` keeps the link delayed, lossy or rate-limited, and **every later lab on
+> this box will look broken**. This is the single most important cleanup in the
+> whole course.
+
+Start by preparing the box:
+
+```bash
+./setup.sh
+```
+
 ---
 
 ## Step 1 — Baseline ping
@@ -74,9 +94,38 @@ tc qdisc del dev eth0 root
 ping -c3 8.8.8.8
 ```
 
+Steps 1–6 are scripted: `./run.sh` runs every shaping command above and removes
+the qdisc on the way out.
+
+Then, **always**, run the cleanup:
+
+```bash
+./cleanup.sh
+```
+
+It deletes any remaining `eth0` root qdisc, stops the backgrounded `iperf3 -s -D`
+server from Step 5, and pings once more so you can confirm the RTT is back to
+your Step 1 baseline. Check the qdisc yourself:
+
+```bash
+tc qdisc show dev eth0
+```
+
+A plain `pfifo_fast`, `fq_codel` or `noqueue` line means `eth0` is unshaped. If
+you still see `netem` or `tbf`, the box is still degraded — run `./cleanup.sh`
+again.
+
 ---
 
 ## What you learned
 - `netem` (network emulator) injects delay, jitter, and loss.
 - `tbf` (token bucket filter) shapes bandwidth.
 - These tools let you reproduce WAN conditions on a single VM for application testing.
+- Why emulation must always be torn down — a forgotten qdisc becomes someone else's mystery outage.
+
+---
+
+## Before you leave
+
+Run `./cleanup.sh` and confirm `tc qdisc show dev eth0` shows no `netem` or `tbf`,
+then work through `checklist.md` and tick every line.

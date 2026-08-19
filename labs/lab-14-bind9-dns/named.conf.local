@@ -1,0 +1,12 @@
+// Lab 14 — zone registration for BIND9.
+// Append to the packaged file with:
+//     cat named.conf.local >> /etc/bind/named.conf.local
+// Validate with: named-checkconf
+//
+// "type master" means this server holds the authoritative copy of the zone
+// (BIND 9.16+ also accepts the newer synonym "type primary").
+
+zone "lab.local" {
+    type master;
+    file "/etc/bind/db.lab.local";
+};

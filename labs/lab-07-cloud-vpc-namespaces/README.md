@@ -7,6 +7,38 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 **Required software (free, pre-installed on Ubuntu):**
 - `iproute2` (provides `ip` command)
 
+**Files in this lab folder**
+
+| File | Use |
+|---|---|
+| `setup.sh` | builds the whole topology — namespaces, bridge, veth pairs, addressing (Steps 1–4) |
+| `verify.sh` | checks both namespaces, the bridge, both addresses and that the pings pass (Step 5) |
+| `cleanup.sh` | deletes the namespaces and the bridge (Step 6) |
+| `checklist.md` | tick-box list of everything you should be able to do by the end |
+
+This is the longest lab in Domain 1 — 22 commands. Build it by hand the first time so
+you see what each command does, then use the scripts to rebuild it quickly:
+
+```bash
+./setup.sh    # Steps 1-4: build the topology
+./verify.sh   # Step 5: prove web can reach db
+./cleanup.sh  # Step 6: tear it all down
+```
+
+`setup.sh` is idempotent — it removes any leftovers from a previous run before building,
+so it is safe to re-run if a step fails halfway.
+
+The finished topology:
+
+```
+  namespace web                              namespace db
+  10.0.1.10/24                               10.0.1.20/24
+     veth-web                                   veth-db
+        |                                          |
+     br-web ------------[ br0 ]--------------- br-db
+                      (the VPC switch)
+```
+
 ---
 
 ## Step 1 — Create two namespaces (representing two VMs)
@@ -69,6 +101,17 @@ ip netns exec web ping -c2 10.0.1.20
 
 If it replies, you have a working VPC subnet.
 
+To check every part of the build at once — namespaces, bridge state, both addresses and
+the ping in both directions:
+
+```bash
+./verify.sh
+```
+
+It prints a `PASS:`/`FAIL:` line per check and exits non-zero if anything is wrong. The
+most common failure is a veth end that was never brought up, or one that was not
+enslaved to `br0`.
+
 ---
 
 ## Step 6 — Clean up
@@ -78,6 +121,17 @@ ip netns del web
 ip netns del db
 ip link del br0
 ```
+
+Or run the script, which does the same and reports what it removed:
+
+```bash
+./cleanup.sh
+```
+
+Deleting a namespace also deletes the veth end inside it, and removing one end of a veth
+pair removes the other — so `br-web` and `br-db` disappear along with the namespaces.
+
+Finally, work through `checklist.md` and tick off each outcome.
 
 ---
 

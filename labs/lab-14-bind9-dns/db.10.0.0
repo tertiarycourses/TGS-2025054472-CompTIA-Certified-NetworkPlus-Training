@@ -1,0 +1,17 @@
+; Lab 14 — OPTIONAL reverse zone for 10.0.0.0/24 (0.0.10.in-addr.arpa)
+; This is the Step 7 bonus, not part of the core lab.
+; Install with:  cp db.10.0.0 /etc/bind/db.10.0.0
+; Validate with: named-checkzone 0.0.10.in-addr.arpa /etc/bind/db.10.0.0
+;
+; PTR records map an address back to a name — the reverse of the A records in
+; db.lab.local. The last octet is the label; the rest comes from the zone name.
+$TTL 86400
+@   IN  SOA ns.lab.local. admin.lab.local. (
+            2026051001 ; serial
+            3600       ; refresh
+            1800       ; retry
+            604800     ; expire
+            86400 )    ; minimum
+@       IN  NS    ns.lab.local.
+10      IN  PTR   www.lab.local.
+20      IN  PTR   mail.lab.local.

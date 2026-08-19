@@ -1,0 +1,27 @@
+timestamp,host,facility,severity,severity_num,process,message
+2026-03-11T08:14:02,core-sw-01,local7,error,3,LINK,Interface GigabitEthernet1/0/24 changed state to down
+2026-03-11T08:14:42,core-sw-01,local7,notice,5,LINEPROTO,Line protocol on Interface GigabitEthernet1/0/24 changed state to up
+2026-03-11T08:22:17,edge-rtr-01,local7,notice,5,BGP,neighbor 10.20.0.2 Up
+2026-03-11T08:31:55,fw-perim-01,kern,warning,4,kernel,DROP SRC=10.99.4.17 DST=10.20.3.41 PROTO=TCP DPT=3389
+2026-03-11T08:45:10,srv-dhcp-01,daemon,info,6,dhcpd,DHCPACK on 10.20.1.152 to 52:54:00:a1:9c:44 via eth0
+2026-03-11T09:02:33,acc-sw-l2-01,local7,critical,2,PORT_SECURITY,Security violation on GigabitEthernet0/12 caused by MAC 52:54:00:be:71:0d
+2026-03-11T09:03:01,acc-sw-l2-01,local7,warning,4,PM,psecure-violation error detected on Gi0/12 putting Gi0/12 in err-disable state
+2026-03-11T09:15:58,srv-app-01,auth,warning,4,sshd,Failed password for root from 10.99.4.17 port 44150 ssh2
+2026-03-11T09:16:20,srv-app-01,auth,info,6,sshd,Accepted publickey for netadmin from 10.20.7.15 port 45012 ssh2
+2026-03-11T09:31:44,wlc-01,local7,warning,4,DOT11,Packet to client 52:54:00:3f:aa:91 reached max retries removing the client
+2026-03-11T09:48:12,ups-dc1-01,daemon,alert,1,upsd,UPS on battery estimated runtime 27 minutes
+2026-03-11T09:52:30,ups-dc1-01,daemon,notice,5,upsd,UPS returned to mains power
+2026-03-11T10:05:14,core-sw-02,local7,notice,5,SYS,Configured from console by netadmin on vty0 10.20.7.15
+2026-03-11T10:11:02,srv-dns-01,daemon,info,6,named,client 10.20.1.152 query intranet.nettech.local/A/IN denied
+2026-03-11T10:19:37,edge-rtr-02,local7,critical,2,SYS,Memory allocation of 65536 bytes failed
+2026-03-11T10:20:03,edge-rtr-02,local7,notice,5,OSPF,Nbr 10.20.0.1 on GigabitEthernet0/1 from FULL to DOWN
+2026-03-11T10:33:55,srv-esx-01,kern,error,3,vmkernel,Device naa.6000c29 performance has deteriorated latency 2140 ms
+2026-03-11T10:41:18,nas-backup-01,daemon,info,6,smbd,Backup job nightly-full completed 412 GB written
+2026-03-11T11:02:09,core-sw-01,local7,alert,1,ENVMON,Fan 2 in chassis has failed
+2026-03-11T11:02:10,core-sw-01,local7,emergency,0,ENVMON,Environmental monitor initiated shutdown in 300 seconds
+2026-03-11T11:20:41,lab-vm,local0,info,6,logger,Network+ Lab 17 test event
+2026-03-11T11:21:05,lab-vm,local0,info,6,logger,Network+ Lab 18 test event
+2026-03-11T11:35:03,srv-ntp-01,daemon,warning,4,chronyd,System clock wrong by 1.284219 seconds adjustment started
+2026-03-11T11:47:29,printer-l2-01,lpr,notice,5,lpd,Paper tray 2 empty
+2026-03-11T12:18:56,dist-sw-01,local7,critical,2,SPANTREE,Root guard blocking port GigabitEthernet0/3 on VLAN0020
+2026-03-11T12:44:11,srv-app-01,daemon,error,3,systemd,nginx.service Main process exited code=exited status=1/FAILURE

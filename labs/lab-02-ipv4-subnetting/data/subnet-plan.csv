@@ -1,0 +1,13 @@
+site,department,host_requirement,parent_network,cidr,network_address,first_host,last_host,broadcast
+Jurong HQ,Engineering,50,192.168.10.0/24,,,,,
+Jurong HQ,Sales,40,192.168.10.0/24,,,,,
+Jurong HQ,Finance,25,192.168.10.0/24,,,,,
+Jurong HQ,Guest Wi-Fi,60,192.168.10.0/24,,,,,
+Tampines Branch,Operations,120,192.168.20.0/24,,,,,
+Tampines Branch,Warehouse,30,192.168.20.0/24,,,,,
+Tampines Branch,Reception,10,192.168.20.0/24,,,,,
+Woodlands DC,Server Farm,100,192.168.30.0/24,,,,,
+Woodlands DC,Storage,20,192.168.30.0/24,,,,,
+Woodlands DC,Out-of-Band Mgmt,12,192.168.30.0/24,,,,,
+Changi Office,Support Desk,55,192.168.40.0/24,,,,,
+Changi Office,Training Room,28,192.168.40.0/24,,,,,

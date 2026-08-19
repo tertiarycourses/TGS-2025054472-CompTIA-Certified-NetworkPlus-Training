@@ -1,0 +1,9 @@
+// Lab 14 — OPTIONAL reverse-zone registration (Step 7 bonus).
+// Append with:
+//     cat named.conf.local.reverse >> /etc/bind/named.conf.local
+// Validate with: named-checkconf
+
+zone "0.0.10.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.10.0.0";
+};

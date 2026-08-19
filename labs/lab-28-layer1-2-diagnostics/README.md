@@ -8,6 +8,14 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 - `ethtool`
 - `iproute2` (pre-installed)
 
+**Files in this lab folder:**
+
+| File | Use |
+|------|-----|
+| `run.sh` | runs the whole diagnostic sequence (Steps 1–5) — or follow the steps by hand |
+| `data/interface-errors.csv` | triage worksheet of sample interface counters, used in Step 7 |
+| `checklist.md` | tick-box list of everything you should be able to do by the end |
+
 ---
 
 ## Step 1 — Install ethtool
@@ -71,9 +79,36 @@ Wait a few seconds, re-check with `ip -brief link`.
 # ethtool -s eth0 speed 1000 duplex full autoneg off
 ```
 
+Run `./run.sh` to execute Steps 1–5 in one go (Step 6 is printed, never executed).
+
+---
+
+## Step 7 — Triage worksheet
+
+Open `data/interface-errors.csv`. Each row is one interface from a fictitious
+`nettech.local` site, with its link state, negotiated speed/duplex and error
+counters. Work down the rows and, for each one, decide what the counters tell you
+**before** you read the `likely_cause` column:
+
+```bash
+column -s, -t data/interface-errors.csv | less -S
+```
+
+Questions to answer from the data:
+1. Which interface shows the classic **duplex mismatch** signature? (high CRC **and** collisions, `duplex=half`, `autoneg=off`)
+2. Which interface has a **cabling** fault rather than a configuration fault? (CRC on receive only)
+3. Which two rows are *not* Layer 1/2 faults at all, and why?
+4. Which rows need no action?
+
 ---
 
 ## What you learned
 - The four states of a Linux NIC (DOWN / UP / NOCARRIER / LOWERLAYERDOWN).
 - Where to read CRC and frame error counters.
 - Why duplex mismatch shows as high error rates without a full link drop.
+
+---
+
+## Before you leave
+
+Work through `checklist.md` and tick every line.

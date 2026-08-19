@@ -1,0 +1,42 @@
+Mar 11 08:14:02 core-sw-01 %LINK-3-UPDOWN: Interface GigabitEthernet1/0/24, changed state to down
+Mar 11 08:14:03 core-sw-01 %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet1/0/24, changed state to down
+Mar 11 08:14:41 core-sw-01 %LINK-3-UPDOWN: Interface GigabitEthernet1/0/24, changed state to up
+Mar 11 08:14:42 core-sw-01 %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet1/0/24, changed state to up
+Mar 11 08:22:17 edge-rtr-01 %BGP-5-ADJCHANGE: neighbor 10.20.0.2 Up
+Mar 11 08:31:55 fw-perim-01 kernel: DROP IN=eth1 OUT= SRC=10.99.4.17 DST=10.20.3.41 PROTO=TCP SPT=51344 DPT=3389
+Mar 11 08:32:10 fw-perim-01 kernel: DROP IN=eth1 OUT= SRC=10.99.4.17 DST=10.20.3.42 PROTO=TCP SPT=51402 DPT=3389
+Mar 11 08:45:09 srv-dhcp-01 dhcpd[1183]: DHCPDISCOVER from 52:54:00:a1:9c:44 via eth0
+Mar 11 08:45:09 srv-dhcp-01 dhcpd[1183]: DHCPOFFER on 10.20.1.152 to 52:54:00:a1:9c:44 via eth0
+Mar 11 08:45:10 srv-dhcp-01 dhcpd[1183]: DHCPACK on 10.20.1.152 to 52:54:00:a1:9c:44 via eth0
+Mar 11 09:02:33 acc-sw-l2-01 %PORT_SECURITY-2-PSECURE_VIOLATION: Security violation on GigabitEthernet0/12, caused by MAC 52:54:00:be:71:0d
+Mar 11 09:03:01 acc-sw-l2-01 %PM-4-ERR_DISABLE: psecure-violation error detected on Gi0/12, putting Gi0/12 in err-disable state
+Mar 11 09:15:48 srv-app-01 sshd[2044]: Failed password for invalid user admin from 10.99.4.17 port 44120 ssh2
+Mar 11 09:15:52 srv-app-01 sshd[2046]: Failed password for invalid user admin from 10.99.4.17 port 44134 ssh2
+Mar 11 09:15:58 srv-app-01 sshd[2049]: Failed password for root from 10.99.4.17 port 44150 ssh2
+Mar 11 09:16:20 srv-app-01 sshd[2071]: Accepted publickey for netadmin from 10.20.7.15 port 45012 ssh2
+Mar 11 09:31:07 wlc-01 %DOT11-6-ASSOC: Station 52:54:00:3f:aa:91 associated to AP ap-l1-014
+Mar 11 09:31:44 wlc-01 %DOT11-4-MAXRETRIES: Packet to client 52:54:00:3f:aa:91 reached max retries, removing the client
+Mar 11 09:48:12 ups-dc1-01 upsd[812]: UPS on battery, estimated runtime 27 minutes
+Mar 11 09:52:30 ups-dc1-01 upsd[812]: UPS returned to mains power
+Mar 11 10:05:14 core-sw-02 %SYS-5-CONFIG_I: Configured from console by netadmin on vty0 (10.20.7.15)
+Mar 11 10:11:02 srv-dns-01 named[943]: client 10.20.1.152#52210: query 'intranet.nettech.local/A/IN' denied
+Mar 11 10:19:37 edge-rtr-02 %SYS-2-MALLOCFAIL: Memory allocation of 65536 bytes failed from 0x60A1B4C0
+Mar 11 10:20:03 edge-rtr-02 %OSPF-5-ADJCHG: Process 1, Nbr 10.20.0.1 on GigabitEthernet0/1 from FULL to DOWN
+Mar 11 10:20:44 edge-rtr-02 %OSPF-5-ADJCHG: Process 1, Nbr 10.20.0.1 on GigabitEthernet0/1 from LOADING to FULL
+Mar 11 10:33:55 srv-esx-01 vmkernel: Device naa.6000c29 performance has deteriorated, latency 2140 ms
+Mar 11 10:41:18 nas-backup-01 smbd[3311]: Backup job nightly-full completed, 412 GB written
+Mar 11 11:02:09 core-sw-01 %ENVMON-1-FAN_FAILED: Fan 2 in chassis has failed
+Mar 11 11:02:10 core-sw-01 %ENVMON-0-SHUTDOWN: Environmental monitor initiated shutdown in 300 seconds
+Mar 11 11:04:22 core-sw-01 %ENVMON-1-FAN_OK: Fan 2 in chassis has recovered, shutdown cancelled
+Mar 11 11:20:41 lab-vm Network+ Lab 17 test event
+Mar 11 11:21:05 lab-vm Network+ Lab 18 test event
+Mar 11 11:22:13 lab-vm Network+ Lab 19 test event
+Mar 11 11:35:02 srv-ntp-01 chronyd[701]: Selected source 10.20.0.1
+Mar 11 11:35:03 srv-ntp-01 chronyd[701]: System clock wrong by 1.284219 seconds, adjustment started
+Mar 11 11:47:29 printer-l2-01 lpd[188]: Paper tray 2 empty
+Mar 11 12:03:44 fw-perim-01 kernel: ACCEPT IN=eth0 OUT=eth1 SRC=10.20.1.152 DST=10.20.3.41 PROTO=TCP SPT=39112 DPT=443
+Mar 11 12:18:56 dist-sw-01 %SPANTREE-2-ROOTGUARD_BLOCK: Root guard blocking port GigabitEthernet0/3 on VLAN0020
+Mar 11 12:19:30 dist-sw-01 %SPANTREE-2-ROOTGUARD_UNBLOCK: Root guard unblocking port GigabitEthernet0/3 on VLAN0020
+Mar 11 12:44:11 srv-app-01 systemd[1]: nginx.service: Main process exited, code=exited, status=1/FAILURE
+Mar 11 12:44:12 srv-app-01 systemd[1]: nginx.service: Scheduled restart job, restart counter is at 1
+Mar 11 12:44:14 srv-app-01 systemd[1]: Started A high performance web server and a reverse proxy server

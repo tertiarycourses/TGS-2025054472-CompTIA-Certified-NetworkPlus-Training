@@ -4,6 +4,13 @@ Network+ candidates must memorise the well-known ports. In this lab you will sca
 
 Run on https://killercoda.com/playgrounds/scenario/ubuntu
 
+**Files in this lab folder**
+
+| File | Use |
+|---|---|
+| `data/well-known-ports.csv` | the full N10-009 port list — service, port, transport, purpose |
+| `checklist.md` | tick-box list of everything you should be able to do by the end |
+
 ---
 
 ## Step 1 — Install nmap and net-tools
@@ -71,6 +78,21 @@ nmap -sT -p 1-1024 scanme.nmap.org
 | 3306 | MySQL | TCP |
 | 3389 | RDP | TCP |
 
+The same list, extended with a one-line purpose for each service and a few extras
+(587, 1433, 1521, 5060/5061), ships as `data/well-known-ports.csv`. Keep it as your
+revision artifact — it greps well:
+
+```bash
+grep -i ldap data/well-known-ports.csv
+grep ',UDP,' data/well-known-ports.csv
+```
+
+To drill yourself, hide the port column and recall each number from the service name:
+
+```bash
+cut -d, -f1,3 data/well-known-ports.csv
+```
+
 ---
 
 ## Step 5 — Resolve a service name to a port
@@ -80,9 +102,14 @@ getent services https
 getent services ssh
 ```
 
+The numbers `getent` returns come from `/etc/services` and should match the CSV exactly.
+
+Finally, work through `checklist.md` and tick off each outcome.
+
 ---
 
 ## What you learned
 - How to enumerate listening services with `ss`.
 - How to scan a remote host with `nmap`.
 - The mapping from common protocol names to the well-known ports tested on N10-009.
+- Which services are UDP-only, and how each cleartext protocol pairs with its TLS twin.

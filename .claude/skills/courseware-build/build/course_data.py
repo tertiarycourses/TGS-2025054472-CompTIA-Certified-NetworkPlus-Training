@@ -9,7 +9,7 @@ aligned with the five official N10-009 exam domains.
 TITLE        = "CompTIA Certified Network+ Training (N10-009)"
 SHORT_TITLE  = "CompTIA Network+ (N10-009)"     # used in output filenames
 COURSE_CODE  = "TGS-2025054472"
-VERSION      = "v2.0"
+VERSION      = "v2.1"
 VERSION_DATE = "19 August 2026"
 ORG          = "Tertiary Infotech Academy Pte Ltd"
 UEN          = "UEN: 201200696W"

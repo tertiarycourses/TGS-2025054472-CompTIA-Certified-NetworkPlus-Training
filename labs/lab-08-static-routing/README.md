@@ -8,6 +8,20 @@ Run on https://killercoda.com/playgrounds/scenario/ubuntu
 - `iproute2`
 - Linux kernel `sysctl` (built in)
 
+**Files shipped with this lab**
+
+| File | Use |
+|------|-----|
+| `setup.sh` | Builds the whole topology (Steps 1–5) in one go |
+| `verify.sh` | Objective `PASS`/`FAIL` check of Step 6 |
+| `cleanup.sh` | Reverses Step 7 and sweeps leftover veth halves |
+| `data/routing-table.csv` | Routing-table planning worksheet used in Step 6 |
+| `checklist.md` | Tick-box list of everything you must be able to show |
+
+Work through Steps 1–7 by hand the first time — that is where the learning is.
+If you need to rebuild the topology quickly (e.g. after a playground reset), run
+`./setup.sh`, which executes exactly the commands in Steps 1–5.
+
 ---
 
 ## Step 1 — Create three namespaces
@@ -79,6 +93,21 @@ ip netns exec a ping -c2 10.2.2.2
 ip netns exec a ip route
 ```
 
+Compare the output of `ip route` with the planning worksheet
+`data/routing-table.csv`, which lists every destination, mask, gateway,
+interface and metric in this topology plus a few extra subnets to plan for:
+
+```bash
+cat data/routing-table.csv
+```
+
+Then run the automated check, which asserts the addressing, `ip_forward`, both
+static routes and the end-to-end ping:
+
+```bash
+./verify.sh
+```
+
 ---
 
 ## Step 7 — Clean up
@@ -86,6 +115,15 @@ ip netns exec a ip route
 ```bash
 for n in a r1 b; do ip netns del $n; done
 ```
+
+Or run the provided script, which does the same and also removes any veth half
+left behind:
+
+```bash
+./cleanup.sh
+```
+
+Finally, work through `checklist.md` and tick off each outcome.
 
 ---
 
